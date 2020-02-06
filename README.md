@@ -6,6 +6,6 @@
 
 ### License information
 - [Codility terms of use for Programmers](https://app.codility.com/terms-of-service-for-programmers/) 
-- [Codility terms of use for Conmpanies](https://app.codility.com/terms-of-service-for-companies/)
+- [Codility terms of use for Companies](https://app.codility.com/terms-of-service-for-companies/)
 - [Additional reference link for License Usage](https://www.martinkysel.com/codility-solutions/)
 
