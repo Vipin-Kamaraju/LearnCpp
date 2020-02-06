@@ -51,18 +51,55 @@ the assessment.
 
 using namespace std;
 
+vector<int> cyclicRotation(vector<int> &A ,int K)
+{
+	// check if empty vector
+	if (A.empty())
+		return A;
+
+	int m = A.size();
+
+	// if same size return original Array
+	if (K == m)
+		return A;
+
+	// check if the no. of rotations is more than the size
+	if (K > m)
+		K = (K%m);
+
+	vector<int> copyA(A.begin(), A.end());
+	vector<int>::iterator a = copyA.begin();
+	
+
+	for (std::vector<int>::iterator i = (A.end() - K); (a != copyA.end()); i++)
+	{
+		if ((i == (A.end())))
+		{
+			i = A.begin();
+		}
+
+		*a = *(i);
+		a++;
+	}
+
+	for (auto elt : copyA)
+	{
+		cout << elt << " ";
+	}
+	return copyA;
+//end:
+}
+
 void main()
 {
-	vector<int> A = {3, 8, 9, 7, 6 , 10};
+	//vector<int> A = {3, 8, 9, 7, 6};
+	vector<int> A = {};
 
 	//{3, 8, 9, 7, 6 ,10 ,20, 3 ,4,5}
 
-	int k = 2;
+	int k = 7;
+	cyclicRotation(A, k);
 
-	vector<int> copyA(A.begin(), A.end());
-
-
-    std:vector<int>::iterator a = copyA.begin();
 	
 	/*if(k == sizeof(A))
 	{ 
@@ -72,34 +109,6 @@ void main()
 		}
 		goto endOfProg;
 	}*/
-
-
-	for (std::vector<int>::iterator i = (A.end() - k); (a != copyA.end()); i++)
-	{
-		if ((i == (A.end())))
-		{
-			i = A.begin();
-		}
-		
-		*a = *(i);
-		a++;
-	}
-	//for (std::vector<int>::iterator i = (A.end() - k); ((i != (A.end())) && (a != copyA.end())); i++)
-	//{
-	//	*a = *(i);
-	//	a++;
-	//}
-
-	//for (std::vector<int>::iterator m = A.begin(); ((m != (A.end())) && (a != copyA.end())); m++)
-	//{
-	//	*a = *m;
-	//	a++;
-	//}
-
-	for (auto elt : copyA)
-	{
-	cout << elt << " ";
-	}
 
 	//endOfProg:
 	system("PAUSE");
