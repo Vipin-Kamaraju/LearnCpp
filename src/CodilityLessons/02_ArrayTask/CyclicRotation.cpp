@@ -74,7 +74,7 @@ void main()
 	}*/
 
 
-	/*for (std::vector<int>::iterator i = (A.end() - k); (a != copyA.end()); i++)
+	for (std::vector<int>::iterator i = (A.end() - k); (a != copyA.end()); i++)
 	{
 		if ((i == (A.end())))
 		{
@@ -83,18 +83,18 @@ void main()
 		
 		*a = *(i);
 		a++;
-	}*/
-	for (std::vector<int>::iterator i = (A.end() - k); ((i != (A.end())) && (a != copyA.end())); i++)
-	{
-		*a = *(i);
-		a++;
 	}
+	//for (std::vector<int>::iterator i = (A.end() - k); ((i != (A.end())) && (a != copyA.end())); i++)
+	//{
+	//	*a = *(i);
+	//	a++;
+	//}
 
-	for (std::vector<int>::iterator m = A.begin(); ((m != (A.end())) && (a != copyA.end())); m++)
-	{
-		*a = *m;
-		a++;
-	}
+	//for (std::vector<int>::iterator m = A.begin(); ((m != (A.end())) && (a != copyA.end())); m++)
+	//{
+	//	*a = *m;
+	//	a++;
+	//}
 
 	for (auto elt : copyA)
 	{
