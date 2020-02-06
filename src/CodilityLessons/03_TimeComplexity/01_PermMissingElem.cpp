@@ -45,56 +45,19 @@ int PermMissingElem(vector<int> &A)
 		return 1;
 
 	sort(A.begin(), A.end());
-	int numberOfEltsA = A.size();
+	//int numberOfEltsA = A.size();
+
 	int count = 1;
-	int middleElt = (numberOfEltsA / 2);
 
-	if (numberOfEltsA % 2 == 0)
+	for (vector<int>::iterator i = A.begin(); i != A.end(); i++)
 	{
-		// number of Elts is even
-		// N = numberOfEltsA/2
-		// middle element =  N
-	}
-	else
-	{
-		// number of elts is odd
-		// N = numberOfEltsA/2
-		// middle element = N+1
-		middleElt = (numberOfEltsA / 2) + 1;
-	}
-
-	
-	cout << "N = " << middleElt << endl;
-	cout << "middle element = " << (*(A.begin() + middleElt-1)) << endl;
-
-	if (middleElt == (*(A.begin() + middleElt - 1)))
-	{
-		count = middleElt;
-		for (vector<int>::iterator i = (A.begin() + middleElt - 1); i != A.end(); i++)
+		if (count != *i)
 		{
-			if (count != *i)
-			{
-				return count;
-			}
-
-			count++;
+			return count;
 		}
+			
+		count++;
 	}
-	else
-	{
-		
-		for (vector<int>::iterator i = A.begin(); i != (A.begin() + middleElt - 1); i++)
-		{
-			if (count != *i)
-			{
-				return count;
-			}
-
-			count++;
-		}
-	}
-
-	
 
 	return count;
 }
@@ -102,7 +65,7 @@ int PermMissingElem(vector<int> &A)
 void main()
 {
 	vector<int> A;
-	A = {2,1,4,5,6,7,8,9};
+	A = {2,3,1,5};
 	int result;
 	result = PermMissingElem(A);
 
