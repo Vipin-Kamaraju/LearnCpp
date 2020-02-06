@@ -5,6 +5,7 @@
 - [Md basic-writing-and-formatting-syntax](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)
 
 ### Checklist for Tasks/ TODO
+- Use sufficient comments in code
 - Follow rule of 3 for all classes
 - Perform static code analysis for all tasks
 - Use exception Handling for error messages
