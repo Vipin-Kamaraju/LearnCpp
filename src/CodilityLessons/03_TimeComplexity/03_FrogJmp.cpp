@@ -40,15 +40,22 @@ using namespace std;
 
 int Frogjmp(int X, int Y, int D)
 {
-	if (X == 0 | Y == 0 | D == 0)
+	if ((X <= 0) | (Y <= 0) | (D <= 0))
 		return 0;
-	int count = 0;
+	
+	int differenceXY = (Y - X);
+	int division = (differenceXY / D);
 
-	for (int Pos = X; (Pos < Y); (Pos = Pos + D))
+	if ((differenceXY%D) == 0)
 	{
-		count++;
+		return division;
+	}		
+	else
+	{
+		division++;
+		return division;
 	}
-	return count;
+	
 }
 
 void main()
