@@ -59,27 +59,23 @@ int TapeEquilibrioum(vector<int> &A)
 	int countLhs= 0;
 	int countRhs = 0;
 	int result=0;
+	int totalSum = 0;
 	vector<int> resultList = {};
 
-	for (int P = 1; P < A.size(); P++)
+	for (auto i : A)
 	{
-		for (vector<int>::iterator i = A.begin(); i != (A.begin() + P); i++)
-		{
-			countLhs = countLhs + (*i);
-		}
+		totalSum = totalSum + i;
+	}
 
-		for (vector<int>::iterator m = (A.begin() + P); m != A.end(); m++)
-		{
-			countRhs = countRhs + (*m);
-		}
-		cout << "P = " << P << endl;
+	for (vector<int>::iterator i = A.begin(); i != A.end(); i++)
+	{
+		countLhs = countLhs + (*i);
+		countRhs = totalSum - countLhs;
 		cout << "countLhs = " << countLhs << endl;
 		cout << "countRhs = " << countRhs << endl;
 
 		result = fabs(countLhs - countRhs);
-		countLhs = 0;
-		countRhs = 0;
-		
+
 		cout << "result = " << result << endl;
 		resultList.push_back(result);
 	}
