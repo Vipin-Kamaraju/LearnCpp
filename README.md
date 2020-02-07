@@ -14,7 +14,7 @@
 - Verify if there are any memory leaks using Visual leak detector
 
 ### Checklist for Advanced Tasks / TODO
-- Use a Gitwork flow
+- Use a Git work-flow
 - Use Git actions 
 - Generate build artifacts 
 
