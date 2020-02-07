@@ -6,6 +6,7 @@
 
 ### Checklist for Tasks/ TODO
 - Use sufficient comments in code
+- Use Doxygen comments
 - Follow rule of 3 for all classes
 - Perform static code analysis for all tasks
 - Use exception Handling for error messages
