@@ -62,12 +62,12 @@ int TapeEquilibrioum(vector<int> &A)
 	int totalSum = 0;
 	vector<int> resultList = {};
 
-	for (auto i : A)
+	for (auto m : A)
 	{
-		totalSum = totalSum + i;
+		totalSum = totalSum + m;
 	}
 
-	for (vector<int>::iterator i = A.begin(); i != A.end(); i++)
+	for (vector<int>::iterator i = A.begin(); i != (A.end()-1); ++i)
 	{
 		countLhs = countLhs + (*i);
 		countRhs = totalSum - countLhs;
@@ -88,7 +88,7 @@ int TapeEquilibrioum(vector<int> &A)
 void main()
 {
 	vector<int> A;
-	A = {3,1,2,4,3};
+	A = {20,0};
 	int result;
 	result = TapeEquilibrioum(A);
 
