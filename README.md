@@ -15,7 +15,7 @@
 
 ### Checklist for Advanced Tasks / TODO
 - Use a Git work-flow
-- Use Git pull requests to assign tasks
+- Use Git pull requests
 - Use Git actions 
 - Generate build artifacts 
 
