@@ -9,15 +9,16 @@ using namespace std;
 class ToolArray
 {
 public:
-	ToolArray();
+	ToolArray(string PlayerName);
 	~ToolArray();
+
+	string name;
 	void addTool(string f_tool);
 	vector<string>& getToolsList();
 
-	// Operator OVerloading for cout
+	// Operator Overloading for cout
 	friend ostream& operator<<(ostream& os, ToolArray& tools);
 
 private:
-	
 	vector<string> m_ListOfTools;
 };
