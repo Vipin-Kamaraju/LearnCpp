@@ -13,6 +13,10 @@ public:
 	~ToolArray();
 	void addTool(string f_tool);
 	vector<string>& getToolsList();
+
+	// Operator OVerloading for cout
+	friend ostream& operator<<(ostream& os, ToolArray& tools);
+
 private:
 	
 	vector<string> m_ListOfTools;

@@ -19,3 +19,11 @@ vector<string>& ToolArray::getToolsList()
 {
 	return m_ListOfTools;
 }
+
+ostream& operator<<(ostream& os, ToolArray& tools)
+{
+	for (std::vector<string>::iterator toolList = tools.getToolsList().begin(); toolList != tools.getToolsList().end(); toolList++)
+	{
+		os << *toolList << endl;
+	}
+}

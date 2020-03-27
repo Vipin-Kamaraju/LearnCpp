@@ -36,27 +36,9 @@ void main()
 
 	Player02.addTool("gun");
 
-	for (std::vector<string>::iterator toolList = Player01.getToolsList().begin(); toolList != Player01.getToolsList().end(); toolList++)
-	{
-		if (printPlayer01)
-		{
-			cout << "Player01 tools list: " << endl;
-			printPlayer01 = false;
-		}
-		
-		cout << *toolList << endl;
-	}
+	cout << "Player01 : \n" << Player01 << endl;
+	cout << "Player02 : \n" << Player02 << endl;
 
-	for (std::vector<string>::iterator toolList02 = Player02.getToolsList().begin(); toolList02 != Player02.getToolsList().end(); toolList02++)
-	{
-		if (printPlayer02)
-		{
-			cout << "Player02 tools list: " << endl;
-			printPlayer02 = false;
-		}
-		
-		cout << *toolList02 << endl;
-	}
 
 	system("PAUSE");
 }
