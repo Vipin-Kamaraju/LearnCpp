@@ -1,15 +1,38 @@
 #include "Class.h"
 
+// Default Constructor
+ToolArray::ToolArray() : name("Unknown"), m_ListOfTools({ "candle" })
+{
+	cout << "Default constructor is called" << endl;
+}
+
+// Overloaded constructor
 ToolArray::ToolArray(string PlayerName)
 {
 	m_ListOfTools = {};
 	name = PlayerName;
-	cout << "ToolArray constructor called" << endl;
+	cout << "ToolArray overloaded constructor called" << endl;
 }
 
+// destructor
 ToolArray::~ToolArray()
 {
 	cout << "ToolArray destructor called" << endl;
+}
+
+//Copy Constructor
+ToolArray::ToolArray(const ToolArray& source)
+{
+	cout << "Copy Constructor is called" << endl;
+}
+
+// Overloaded Assignment Operator
+ToolArray& ToolArray::operator=(const ToolArray& source)
+{
+	cout << "Overloaded assignment operator called" << endl;
+	ToolArray destination;
+
+	return destination;
 }
 
 void ToolArray::addTool(string f_tool)
@@ -23,6 +46,8 @@ vector<string>& ToolArray::getToolsList()
 	return m_ListOfTools;
 }
 
+
+// Overloaded operator for cout
 ostream& operator<<(ostream& os,ToolArray& tools)
 {
 	os << tools.name << ":" << endl;
