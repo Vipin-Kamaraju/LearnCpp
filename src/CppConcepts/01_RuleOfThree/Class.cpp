@@ -1,7 +1,7 @@
 #include "Class.h"
 
 // Default Constructor
-ToolArray::ToolArray() : name("Unknown"), m_ListOfTools({ "candle" })
+ToolArray::ToolArray() : name("Unknown")
 {
 	cout << "Default constructor is called" << endl;
 }
@@ -9,7 +9,6 @@ ToolArray::ToolArray() : name("Unknown"), m_ListOfTools({ "candle" })
 // Overloaded constructor
 ToolArray::ToolArray(string PlayerName)
 {
-	m_ListOfTools = {};
 	name = PlayerName;
 	cout << "ToolArray overloaded constructor called" << endl;
 }
@@ -24,15 +23,29 @@ ToolArray::~ToolArray()
 ToolArray::ToolArray(const ToolArray& source)
 {
 	cout << "Copy Constructor is called" << endl;
+
+	name = source.name; // Same as this->name = source.name;
+
+	// Is this a shallow copy or deep copy?
+	// copy(source.m_ListOfTools.begin(), source.m_ListOfTools.end(), m_ListOfTools.begin());
+	m_ListOfTools = source.m_ListOfTools;
 }
 
 // Overloaded Assignment Operator
 ToolArray& ToolArray::operator=(const ToolArray& source)
 {
 	cout << "Overloaded assignment operator called" << endl;
-	ToolArray destination;
+	
+	// Check for self assignment
+	if (this == &source)
+	{
+		return *this;
+	}
+	this->name = source.name; // Same as this->name = source.name;
 
-	return destination;
+	// Is this a shallow copy or deep copy?
+	copy(source.m_ListOfTools.begin(), source.m_ListOfTools.end(), m_ListOfTools.begin());
+	//this->m_ListOfTools = source.m_ListOfTools;
 }
 
 void ToolArray::addTool(string f_tool)

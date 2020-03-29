@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,7 +25,6 @@ public:
 	// Copy Constructor
 	ToolArray(const ToolArray& source);
 
-	string name;
 	void addTool(string f_tool);
 	vector<string>& getToolsList();
 
@@ -32,5 +32,7 @@ public:
 	friend ostream& operator<<(ostream& os, ToolArray& source);
 
 private:
+	string name;
 	vector<string> m_ListOfTools;
+
 };

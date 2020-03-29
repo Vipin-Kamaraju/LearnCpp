@@ -5,7 +5,7 @@ Rule of 3 implementation
 
 Task:
  - Overloaded cout operator : COMPLETED
- - Check when
+ - Check when : COMPLETED
 	- Default constructor is called (vs)
 	- Copy Constructor is called (vs)
 	- Overloaded assignment operator is called
@@ -13,8 +13,10 @@ Task:
  - Rule of 3 : Overloaded Assignment operator, Copy Constructor, Destructor
 
 Code Comments:
-	- This shows all the scenarios when copy constructor (vs) overloaded assignemnt operator 
-	- .. (vs) default constructor is called
+	- Demonstration of how copy ctr and overloaded assignment operator can be used to initialize an object
+	- Uncomment the line.30 copy() in Class.cpp. you will get a segmentation fault. But the same line in 
+	- .. overloaded assignment operator does not give this error. Why? Compare both the functions for copy()
+	- Difference between Copy constructor and Overloaded assignment operator
 
 */
 
@@ -47,6 +49,13 @@ void main()
 	// This is only invoked when the object already exists
 	Player04 = Player01;
 	cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+
+	cout << Player01 << endl;
+	cout << Player02 << endl;
+	cout << Player03 << endl;
+	cout << Player04 << endl;
+	cout << Player05 << endl;
+
 	
 	system("PAUSE");
 }
