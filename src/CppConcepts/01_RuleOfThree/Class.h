@@ -29,6 +29,7 @@ public:
 	vector<string>& getToolsList();
 
 	// Operator Overloading for cout
+	// keyword friend is used to access the private members of ToolArray class
 	friend ostream& operator<<(ostream& os, ToolArray& source);
 
 private:

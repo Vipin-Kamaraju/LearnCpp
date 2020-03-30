@@ -18,6 +18,12 @@ Code Comments:
 	- .. overloaded assignment operator does not give this error. Why? Compare both the functions for copy()
 	- Difference between Copy constructor and Overloaded assignment operator
 
+Answers:
+	- the copy funtion was failing in the copy ctr and passing in the overloaded assignment operator since
+	- .. the size of the m_ListOfTools vector is not the same as source.m_ListOfTools. Run this code to see the 
+	- ..size being printed. It passed in overloaded assignment operator since the size was same. Also this is deep copy
+	- ..which means there will a significant loss in performance.
+
 */
 
 #include <iostream>
@@ -47,8 +53,15 @@ void main()
 
 	// Overloaded Assignment Operator
 	// This is only invoked when the object already exists
+	// a = b => a.operator=(b)
 	Player04 = Player01;
 	cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+
+	cout << &(Player01.getToolsList()) << endl;
+	cout << &(Player02.getToolsList()) << endl;
+	cout << &(Player03.getToolsList()) << endl;
+	cout << &(Player04.getToolsList()) << endl;
+	cout << &(Player05.getToolsList()) << endl;
 
 	cout << Player01 << endl;
 	cout << Player02 << endl;

@@ -26,8 +26,12 @@ ToolArray::ToolArray(const ToolArray& source)
 
 	name = source.name; // Same as this->name = source.name;
 
+	cout << m_ListOfTools.size() << endl;
+	cout << source.m_ListOfTools.size() << endl;
+
 	// Is this a shallow copy or deep copy?
-	// copy(source.m_ListOfTools.begin(), source.m_ListOfTools.end(), m_ListOfTools.begin());
+	// Mostly deep copy since the address of both the variables are different
+	//copy(source.m_ListOfTools.begin(), source.m_ListOfTools.end(), m_ListOfTools.begin());
 	m_ListOfTools = source.m_ListOfTools;
 }
 
@@ -43,9 +47,11 @@ ToolArray& ToolArray::operator=(const ToolArray& source)
 	}
 	this->name = source.name; // Same as this->name = source.name;
 
+	cout << m_ListOfTools.size() << endl;
+	cout << source.m_ListOfTools.size() << endl;
 	// Is this a shallow copy or deep copy?
 	copy(source.m_ListOfTools.begin(), source.m_ListOfTools.end(), m_ListOfTools.begin());
-	//this->m_ListOfTools = source.m_ListOfTools;
+	// this->m_ListOfTools = source.m_ListOfTools;
 }
 
 void ToolArray::addTool(string f_tool)
