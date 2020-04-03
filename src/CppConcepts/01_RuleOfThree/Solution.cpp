@@ -4,7 +4,7 @@
 Rule of 3 implementation
 
 Task:
- - Write a case where there is no copy ctr , overloaded ass operator and the system shall not crash
+ - Shallow copy and deep copy using Copy Ctr and Overloaded Assignment Optr
 
 Code Comments:
  - This code does not crash
@@ -54,7 +54,7 @@ void main()
 	// Overloaded Assignment Operator
 	// This is only invoked when the object already exists
 	// a = b => a.operator=(b)
-	// Player04 = Player01;
+	Player04 = Player01;
 
 	Player01.addTool("gun");
 	Player01.addPower("explode");

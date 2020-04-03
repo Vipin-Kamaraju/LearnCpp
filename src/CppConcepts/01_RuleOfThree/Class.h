@@ -21,10 +21,10 @@ public:
 	~ToolArray();
 
 	// Overloaded assignment operator
-	//ToolArray& operator=(const ToolArray& source);
+	ToolArray& operator=(const ToolArray& source);
 
 	// Copy Constructor
-	//ToolArray(const ToolArray& source);
+	ToolArray(const ToolArray& source);
 
 	void addTool(string f_tool);
 	vector<string>& getToolsList();
