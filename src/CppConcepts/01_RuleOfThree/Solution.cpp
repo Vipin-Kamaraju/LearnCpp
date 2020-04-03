@@ -4,21 +4,19 @@
 Rule of 3 implementation
 
 Task:
- - Write a case where there is no copy ctr , overloaded ass operator and the system shall crash
+ - Write a case where there is no copy ctr , overloaded ass operator and the system shall not crash
 
 Code Comments:
- - Demonstration why rule of three is needed
- - No copy ctr and no overloaded ass optr
- - Code crashes on exit
- - A shallow copy for the PowersList is created and in the destructor when this is deleted we will see that the application is crashing
- - p_PowersList is a shallow copy : since the 'explode' power is added only for Player01 but is duplicated for Player04, Player05
- - m_ListOfTools is a deep copy :  since every Player has its own memory address for this member variable. Also the 'gun' tool is only
- - .. for Player01 in the o/p
+ - This code does not crash
+ - m_ListOfTools is an example of deep copy
+ - p_PowersList is an example of Shallow copy
+ - Set a breakpoint in the destructor to see the program flow
 
 Answers:
- - A good check to verify whether a copy is shallow or deep. Modify the contents that the pointer is pointing to.
- - By doing this you can check if the output was modified for both the Objects
- - If yes => Shallow copy, else => deep copy
+ - A good check to verify whether a copy is shallow or deep.
+ - Verify the address printed for m_ListOfTools & p_PowersList
+ - p_PowersList shows the same address => shallow copy
+ - m_ListOfTools shows different address => deep copy
 
 */
 
@@ -60,24 +58,29 @@ void main()
 
 	Player01.addTool("gun");
 	Player01.addPower("explode");
+	Player03.setName("Michael");
+	Player04.setName("Karl");
+	Player05.setName("Stefan");
 
+	cout << "**********Deep copy of m_ListOfTools different address************" << endl;
 	cout << &(Player01.getToolsList()) << endl;
 	cout << &(Player02.getToolsList()) << endl;
 	cout << &(Player03.getToolsList()) << endl;
 	cout << &(Player04.getToolsList()) << endl;
 	cout << &(Player05.getToolsList()) << endl;
 
+	cout << "**********Shallow copy of p_PowersList same address************" << endl;
 	cout << (Player01.getPowersList()) << endl;
 	cout << (Player02.getPowersList()) << endl;
 	cout << (Player03.getPowersList()) << endl;
 	cout << (Player04.getPowersList()) << endl;
 	cout << (Player05.getPowersList()) << endl;
 
-	cout << Player01 << endl;
-	cout << Player02 << endl;
-	cout << Player03 << endl;
-	cout << Player04 << endl;
-	cout << Player05 << endl;
+	Player01.PrintToolArrayClass();
+	Player02.PrintToolArrayClass();
+	Player03.PrintToolArrayClass();
+	Player04.PrintToolArrayClass();
+	Player05.PrintToolArrayClass();
 
 	
 	system("PAUSE");

@@ -27,8 +27,17 @@ ToolArray::~ToolArray()
 	cout << "ToolArray destructor called" << endl;
 	cout << &m_ListOfTools << endl;
 	cout << p_PowersList << endl;
-	delete &m_ListOfTools;
-	delete p_PowersList;
+	if (!m_ListOfTools.empty())
+	{
+		cout << "m_ListOfTools is being cleared" << endl;
+		this->m_ListOfTools.clear();
+	}
+
+	if (p_PowersList != nullptr)
+	{
+		cout << "p_PowersList is being cleared" << endl;
+		p_PowersList->clear();
+	}
 }
 
 //Copy Constructor
@@ -78,6 +87,11 @@ vector<string>* ToolArray::getPowersList()
 	return p_PowersList;
 }
 
+void ToolArray::setName(string PlayerName)
+{
+	name = PlayerName;
+}
+
 
 // Overloaded operator for cout
 ostream& operator<<(ostream& os,ToolArray& tools)
@@ -97,4 +111,9 @@ ostream& operator<<(ostream& os,ToolArray& tools)
 	}
 	
 	return os;
+}
+
+void ToolArray::PrintToolArrayClass()
+{
+	cout << *this << endl;
 }

@@ -32,9 +32,14 @@ public:
 	void addPower(string f_Power);
 	vector<string>* getPowersList();
 
+	void setName(string PlayerName);
+
 	// Operator Overloading for cout
 	// keyword friend is used to access the private members of ToolArray class
 	friend ostream& operator<<(ostream& os, ToolArray& source);
+
+	// PrintClass function
+	void PrintToolArrayClass();
 
 private:
 	string name;
