@@ -4,20 +4,16 @@
 Rule of 3 implementation
 
 Task:
- - Shallow copy and deep copy using Copy Ctr and Overloaded Assignment Optr
+ - Remove static code analysis warnings : QAC (187 warnings)
+ - Use const reference
+ - Add doxygen comments
 
 Code Comments:
- - This code does not crash
- - m_ListOfTools is an example of deep copy
- - p_PowersList is an example of Shallow copy
- - Set a breakpoint in the destructor to see the program flow
+ - Remove static code analysis
+ - Warnings with severity level 7 and above removed
 
 Answers:
- - A good check to verify whether a copy is shallow or deep.
- - Verify the address printed for m_ListOfTools & p_PowersList
- - p_PowersList shows the same address => shallow copy
- - m_ListOfTools shows different address => deep copy
-
+ - 
 */
 
 #include <iostream>

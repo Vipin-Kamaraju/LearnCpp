@@ -1,28 +1,28 @@
 #include "Class.h"
 
 // Default Constructor
-ToolArray::ToolArray() : name("Unknown")
-{
-	cout << "Constructor is called" << endl;
-}
+//ToolArray::ToolArray() : name("Unknown")
+//{
+//	cout << "Constructor is called" << endl;
+//}
 
 // Overloaded constructor
-ToolArray::ToolArray(string PlayerName)
-{
-	name = PlayerName;
-	cout << "ToolArray overloaded constructor called" << endl;
-}
+//ToolArray::ToolArray(string PlayerName)
+//{
+//	name = PlayerName;
+//	cout << "ToolArray overloaded constructor called" << endl;
+//}
 
 // Overloaded constructor
-ToolArray::ToolArray(string PlayerName, std::vector<string>* p_PList)
-{
-	cout << "ToolArray overloaded constructor called" << endl;
-	p_PowersList = p_PList;
-	name = PlayerName;
-}
+//ToolArray::ToolArray(string PlayerName, std::vector<string>* p_PList)
+//{
+//	cout << "ToolArray overloaded constructor called" << endl;
+//	p_PowersList = p_PList;
+//	name = PlayerName;
+//}
 
 // destructor
-ToolArray::~ToolArray()
+ToolArray::~ToolArray() noexcept
 {
 	cout << "ToolArray destructor called" << endl;
 	cout << &m_ListOfTools << endl;
@@ -41,18 +41,10 @@ ToolArray::~ToolArray()
 }
 
 //Copy Constructor
-ToolArray::ToolArray(const ToolArray& source)
-{
-	cout << "Copy Constructor is called" << endl;
-
-	name = source.name; // Same as this->name = source.name;
-	
-	// Is this a shallow copy or deep copy? Mostly Deep copy
-	m_ListOfTools = source.m_ListOfTools;
-
-	// Shallow copy
-	p_PowersList = source.p_PowersList;
-}
+//ToolArray::ToolArray(const ToolArray& source) : name(source.name), m_ListOfTools(source.m_ListOfTools), p_PowersList(source.p_PowersList)
+//{
+//	cout << "Copy Constructor is called" << endl;
+//}
 
 // Overloaded Assignment Operator
 ToolArray& ToolArray::operator=(const ToolArray& source)
@@ -69,6 +61,8 @@ ToolArray& ToolArray::operator=(const ToolArray& source)
 
 	// Shallow copy
 	this->p_PowersList = source.p_PowersList;
+
+	return *this;
 }
 
 void ToolArray::addTool(string f_tool)
@@ -88,7 +82,7 @@ void ToolArray::addPower(string f_Power)
 }
 
 
-vector<string>* ToolArray::getPowersList()
+vector<string>* ToolArray::getPowersList() const
 {
 	return p_PowersList;
 }
