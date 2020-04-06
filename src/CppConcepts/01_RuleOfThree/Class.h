@@ -6,7 +6,8 @@
 #include <algorithm>
 #include <stdexcept>
 
-using namespace std;
+//#define ACTV_COUT_INFO
+//#define ACTV_COUT_DEBUG
 
 class ToolArray
 {
@@ -14,56 +15,64 @@ public:
 	// Default Constructor with initialization list
 	ToolArray() : name("Unknown"), m_ListOfTools({}), p_PowersList(nullptr)
 	{
-		//cout << "Constructor is called" << endl;
+		#ifdef ACTV_COUT_INFO
+		std::cout << "Constructor is called" << "\n";
+		#endif
 	}
 
 	// Overloaded Constructor
-	ToolArray(string PlayerName, std::vector<string>* p_PList) : name(PlayerName), m_ListOfTools({}), p_PowersList(p_PList)
+	ToolArray(std::string const PlayerName, std::vector<std::string>* const p_PList) : name(PlayerName), m_ListOfTools({}), p_PowersList(p_PList)
 	{
-		//cout << "ToolArray overloaded constructor called" << endl;
+		#ifdef ACTV_COUT_INFO
+		std::cout << "ToolArray overloaded constructor called" << "\n";
+		#endif
 	}
 
-	ToolArray(string PlayerName) : name(PlayerName), m_ListOfTools({}), p_PowersList(nullptr)
+	explicit ToolArray(std::string const PlayerName) : name(PlayerName), m_ListOfTools({}), p_PowersList(nullptr)
 	{
-		//cout << "ToolArray overloaded constructor called" << endl;
+		#ifdef ACTV_COUT_INFO
+		std::cout << "ToolArray overloaded constructor called" << "\n";
+		#endif
 	}
 
 	// Default Destructor
 	~ToolArray() noexcept;
 
 	// Overloaded assignment operator
-	ToolArray& operator=(const ToolArray& source);
+	ToolArray& operator=(ToolArray const& source) &;
 
 	// Copy Constructor
-	ToolArray(const ToolArray& source) : name(source.name), m_ListOfTools(source.m_ListOfTools), p_PowersList(source.p_PowersList)
+	ToolArray(ToolArray const& source) : name(source.name), m_ListOfTools(source.m_ListOfTools), p_PowersList(source.p_PowersList)
 	{
-		//cout << "Copy Constructor is called" << endl;
+		#ifdef ACTV_COUT_INFO
+		std::cout << "Copy Constructor is called" << "\n";
+		#endif
 	}
 
-	const string& getName() const;
+	std::string const& getName() const;
 
-	void addTool(string f_tool);
-	const vector<string>& getToolsList() const;
+	void addTool(std::string f_tool);
+	std::vector<std::string> const& getToolsList() const;
 
-	void addPower(string f_Power);
-	const vector<string>* getPowersList() const;
+	void addPower(std::string f_Power);
+	std::vector<std::string>const* getPowersList() const;
 
-	void setName(string PlayerName);
+	void setName(std::string PlayerName);
 
-	// Operator Overloading for cout
+	// Operator Overloading for std::cout
 	// keyword friend is used to access the private members of ToolArray class
-	// friend ostream& operator<<(ostream& os, ToolArray& source);
+	friend std::ostream& operator<<(std::ostream& os,ToolArray const& source);
 
 	// PrintClass function
 	void PrintToolArrayClass();
 	
-	// The function cannot be written this way since it cannot be called
-	// in Solution.cpp how can we call this Player01.PrintToolArrayClass(Player01) 
-	// void PrintToolArrayClass(const ToolArray& Player);
+	// The function cannot be written this way since it cannot be called in Solution.cpp. 
+	// How can we call the below mentioned function Player01.PrintToolArrayClass(Player01) 
+	// does not make sense if declared like this void PrintToolArrayClass(const ToolArray& Player)
 
 private:
-	string name;
-	vector<string> m_ListOfTools;
-	vector<string>* p_PowersList;	
+	std::string name;
+	std::vector<std::string> m_ListOfTools;
+	std::vector<std::string>* p_PowersList;
 
 };

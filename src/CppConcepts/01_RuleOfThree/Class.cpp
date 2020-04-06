@@ -1,28 +1,29 @@
 #include "Class.h"
 
+
 // Destructor
 ToolArray::~ToolArray() noexcept
 {
-	cout << "ToolArray destructor called" << endl;
-	cout << &m_ListOfTools << endl;
-	cout << p_PowersList << endl;
+	std::cout << "ToolArray destructor called" << "\n";
+	std::cout << &m_ListOfTools << "\n";
+	std::cout << p_PowersList << "\n";
 	if (!m_ListOfTools.empty())
 	{
-		cout << "m_ListOfTools is being cleared" << endl;
+		std::cout << "m_ListOfTools is being cleared" << "\n";
 		this->m_ListOfTools.clear();
 	}
 
 	if (p_PowersList != nullptr)
 	{
-		cout << "p_PowersList is being cleared" << endl;
+		std::cout << "p_PowersList is being cleared" << "\n";
 		p_PowersList->clear();
 	}
 }
 
 // Overloaded Assignment Operator
-ToolArray& ToolArray::operator=(const ToolArray& source)
+ToolArray& ToolArray::operator=(ToolArray const& source) &
 {
-	cout << "Overloaded assignment operator called" << endl;
+	std::cout << "Overloaded assignment operator called" << "\n";
 	
 	// Check for self assignment
 	if (this == &source)
@@ -37,53 +38,53 @@ ToolArray& ToolArray::operator=(const ToolArray& source)
 	return *this;
 }
 
-const string& ToolArray::getName() const
+std::string const& ToolArray::getName() const
 {
 	return name;
 }
 
-void ToolArray::addTool(string f_tool)
+void ToolArray::addTool(std::string const f_tool)
 {
 	this->m_ListOfTools.push_back(f_tool);
 }
 
 
-const vector<string>& ToolArray::getToolsList() const
+std::vector<std::string> const& ToolArray::getToolsList() const
 {
 	return m_ListOfTools;
 }
 
-void ToolArray::addPower(string f_Power)
+void ToolArray::addPower(std::string const f_Power)
 {
 	p_PowersList->push_back(f_Power);
 }
 
 
-const vector<string>* ToolArray::getPowersList() const
+std::vector<std::string>const* ToolArray::getPowersList() const
 {
 	return p_PowersList;
 }
 
-void ToolArray::setName(string PlayerName)
+void ToolArray::setName(std::string const PlayerName)
 {
 	name = PlayerName;
 }
 
 
-// Overloaded operator for cout
-ostream& operator<<(ostream& os,const ToolArray& tools)
+// Overloaded operator for std::cout
+std::ostream& operator<<(std::ostream& os,ToolArray const& tools)
 {
-	os << "**********" << tools.getName() << "**********" << endl;
-	os << "Tools List:" << endl;
-	for (std::vector<string>::const_iterator toolList = tools.getToolsList().begin(); toolList != tools.getToolsList().end(); toolList++)
+	os << "**********" << tools.getName() << "**********" << "\n";
+	os << "Tools List:" << "\n";
+	for (std::vector<std::string>::const_iterator toolList = tools.getToolsList().begin(); toolList != tools.getToolsList().end(); toolList++)
 	{
-		os << *toolList << endl;
+		os << *toolList << "\n";
 	}
-	os << "Powers List:" << endl;
+	os << "Powers List:" << "\n";
 	if (tools.getPowersList() != nullptr) {
-		for (std::vector<string>::const_iterator powersList = tools.getPowersList()->begin(); powersList != tools.getPowersList()->end(); powersList++)
+		for (std::vector<std::string>::const_iterator powersList = tools.getPowersList()->begin(); powersList != tools.getPowersList()->end(); powersList++)
 		{
-			os << *powersList << endl;
+			os << *powersList << "\n";
 		}
 	}
 	return os;
@@ -91,5 +92,5 @@ ostream& operator<<(ostream& os,const ToolArray& tools)
 
 void ToolArray::PrintToolArrayClass()
 {
-	cout << *this << endl;
+	std::cout << *this << "\n";
 }

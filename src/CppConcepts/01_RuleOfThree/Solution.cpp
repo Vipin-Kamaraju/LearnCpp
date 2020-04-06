@@ -9,8 +9,10 @@ Task:
  - Add doxygen comments
 
 Code Comments:
- - Added const reference in code for all get functions
- - Const correctness maintained
+ - Removed more static code analysis warnings
+ - All QAC warnings with severity 6 and above are removed
+ - QAC warnings count 109 with 4 known severity 5 warnings
+ - Added more const keyword to the code with complaince to code quality
 
 Answers:
  - 
@@ -19,20 +21,27 @@ Answers:
 #include <iostream>
 #include "Class.h"
 
-using namespace std;
 
 void main()
 {
-	std::vector<string> PowersList;
+	std::vector<std::string> PowersList;
 	PowersList.push_back("kill");
 	PowersList.push_back("shoot");
 	PowersList.push_back("thunder");
 
-	std::vector<string>* p_PowersList = &PowersList;
+	std::vector<std::string>* const p_PowersList = &PowersList;
 
 	// Overloaded Constructor
 	ToolArray Player01("Matthias", p_PowersList);
-	ToolArray Player02 = "Tobi";
+
+	// This will no longer be valid since we added the & in the overloaded assignment operator funct
+	// The & in the end will prevent accepting rvalues as parameters
+	// The built-in assignment operators do not accept rvalues as parameters and hence it would be confusing if 
+	// built-in parameters accept rvalue parameters
+	// QAC rule violation A12-8-7 :Assignment operators should be declared with the ref-qualifier &.
+	// Due to this violation ToolArray Player02 = "Tobi" cannot be used
+
+	ToolArray Player02("Tobi");
 
 	Player01.addTool("axe");
 	Player01.addTool("knife");
@@ -58,19 +67,23 @@ void main()
 	Player04.setName("Karl");
 	Player05.setName("Stefan");
 
-	cout << "**********Deep copy of m_ListOfTools different address************" << endl;
-	cout << &(Player01.getToolsList()) << endl;
-	cout << &(Player02.getToolsList()) << endl;
-	cout << &(Player03.getToolsList()) << endl;
-	cout << &(Player04.getToolsList()) << endl;
-	cout << &(Player05.getToolsList()) << endl;
+#ifdef ACTV_COUT_DEBUG
 
-	cout << "**********Shallow copy of p_PowersList same address************" << endl;
-	cout << (Player01.getPowersList()) << endl;
-	cout << (Player02.getPowersList()) << endl;
-	cout << (Player03.getPowersList()) << endl;
-	cout << (Player04.getPowersList()) << endl;
-	cout << (Player05.getPowersList()) << endl;
+	std::cout << "**********Deep copy of m_ListOfTools different address************" << "\n";
+	std::cout << &(Player01.getToolsList()) << "\n";
+	std::cout << &(Player02.getToolsList()) << "\n";
+	std::cout << &(Player03.getToolsList()) << "\n";
+	std::cout << &(Player04.getToolsList()) << "\n";
+	std::cout << &(Player05.getToolsList()) << "\n";
+
+	std::cout << "**********Shallow copy of p_PowersList same address************" << "\n";
+	std::cout << (Player01.getPowersList()) << "\n";
+	std::cout << (Player02.getPowersList()) << "\n";
+	std::cout << (Player03.getPowersList()) << "\n";
+	std::cout << (Player04.getPowersList()) << "\n";
+	std::cout << (Player05.getPowersList()) << "\n";
+
+#endif // ACTV_COUT_DEBUG
 
 	Player01.PrintToolArrayClass();
 	Player02.PrintToolArrayClass();
