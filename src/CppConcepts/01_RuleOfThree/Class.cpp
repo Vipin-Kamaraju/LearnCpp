@@ -1,27 +1,6 @@
 #include "Class.h"
 
-// Default Constructor
-//ToolArray::ToolArray() : name("Unknown")
-//{
-//	cout << "Constructor is called" << endl;
-//}
-
-// Overloaded constructor
-//ToolArray::ToolArray(string PlayerName)
-//{
-//	name = PlayerName;
-//	cout << "ToolArray overloaded constructor called" << endl;
-//}
-
-// Overloaded constructor
-//ToolArray::ToolArray(string PlayerName, std::vector<string>* p_PList)
-//{
-//	cout << "ToolArray overloaded constructor called" << endl;
-//	p_PowersList = p_PList;
-//	name = PlayerName;
-//}
-
-// destructor
+// Destructor
 ToolArray::~ToolArray() noexcept
 {
 	cout << "ToolArray destructor called" << endl;
@@ -40,12 +19,6 @@ ToolArray::~ToolArray() noexcept
 	}
 }
 
-//Copy Constructor
-//ToolArray::ToolArray(const ToolArray& source) : name(source.name), m_ListOfTools(source.m_ListOfTools), p_PowersList(source.p_PowersList)
-//{
-//	cout << "Copy Constructor is called" << endl;
-//}
-
 // Overloaded Assignment Operator
 ToolArray& ToolArray::operator=(const ToolArray& source)
 {
@@ -56,13 +29,17 @@ ToolArray& ToolArray::operator=(const ToolArray& source)
 	{
 		return *this;
 	}
-	this->name = source.name; // Same as this->name = source.name;
-	this->m_ListOfTools = source.m_ListOfTools;
-
-	// Shallow copy
-	this->p_PowersList = source.p_PowersList;
+	
+	this->name = source.name; // Same as name = source.name;
+	this->m_ListOfTools = source.m_ListOfTools;	
+	this->p_PowersList = source.p_PowersList; // Shallow copy
 
 	return *this;
+}
+
+const string& ToolArray::getName() const
+{
+	return name;
 }
 
 void ToolArray::addTool(string f_tool)
@@ -71,7 +48,7 @@ void ToolArray::addTool(string f_tool)
 }
 
 
-vector<string>& ToolArray::getToolsList()
+const vector<string>& ToolArray::getToolsList() const
 {
 	return m_ListOfTools;
 }
@@ -82,7 +59,7 @@ void ToolArray::addPower(string f_Power)
 }
 
 
-vector<string>* ToolArray::getPowersList() const
+const vector<string>* ToolArray::getPowersList() const
 {
 	return p_PowersList;
 }
@@ -94,22 +71,21 @@ void ToolArray::setName(string PlayerName)
 
 
 // Overloaded operator for cout
-ostream& operator<<(ostream& os,ToolArray& tools)
+ostream& operator<<(ostream& os,const ToolArray& tools)
 {
-	os << "**********" << tools.name << "**********" << endl;
+	os << "**********" << tools.getName() << "**********" << endl;
 	os << "Tools List:" << endl;
-	for (std::vector<string>::iterator toolList = tools.getToolsList().begin(); toolList != tools.getToolsList().end(); toolList++)
+	for (std::vector<string>::const_iterator toolList = tools.getToolsList().begin(); toolList != tools.getToolsList().end(); toolList++)
 	{
 		os << *toolList << endl;
 	}
 	os << "Powers List:" << endl;
 	if (tools.getPowersList() != nullptr) {
-		for (std::vector<string>::iterator powersList = tools.getPowersList()->begin(); powersList != tools.getPowersList()->end(); powersList++)
+		for (std::vector<string>::const_iterator powersList = tools.getPowersList()->begin(); powersList != tools.getPowersList()->end(); powersList++)
 		{
 			os << *powersList << endl;
 		}
 	}
-	
 	return os;
 }
 

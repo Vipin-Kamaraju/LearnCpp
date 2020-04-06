@@ -9,8 +9,8 @@ Task:
  - Add doxygen comments
 
 Code Comments:
- - Remove static code analysis
- - Warnings with severity level 7 and above removed
+ - Added const reference in code for all get functions
+ - Const correctness maintained
 
 Answers:
  - 

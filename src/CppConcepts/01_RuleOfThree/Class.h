@@ -40,24 +40,30 @@ public:
 		//cout << "Copy Constructor is called" << endl;
 	}
 
+	const string& getName() const;
+
 	void addTool(string f_tool);
-	vector<string>& getToolsList();
+	const vector<string>& getToolsList() const;
 
 	void addPower(string f_Power);
-	vector<string>* getPowersList() const;
+	const vector<string>* getPowersList() const;
 
 	void setName(string PlayerName);
 
 	// Operator Overloading for cout
 	// keyword friend is used to access the private members of ToolArray class
-	friend ostream& operator<<(ostream& os, ToolArray& source);
+	// friend ostream& operator<<(ostream& os, ToolArray& source);
 
 	// PrintClass function
 	void PrintToolArrayClass();
+	
+	// The function cannot be written this way since it cannot be called
+	// in Solution.cpp how can we call this Player01.PrintToolArrayClass(Player01) 
+	// void PrintToolArrayClass(const ToolArray& Player);
 
 private:
 	string name;
 	vector<string> m_ListOfTools;
-	vector<string>* p_PowersList;
+	vector<string>* p_PowersList;	
 
 };
