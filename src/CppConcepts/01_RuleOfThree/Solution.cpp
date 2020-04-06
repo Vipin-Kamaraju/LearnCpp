@@ -4,15 +4,10 @@
 Rule of 3 implementation
 
 Task:
- - Remove static code analysis warnings : QAC (187 warnings)
- - Use const reference
  - Add doxygen comments
 
 Code Comments:
- - Removed more static code analysis warnings
- - All QAC warnings with severity 6 and above are removed
- - QAC warnings count 109 with 4 known severity 5 warnings
- - Added more const keyword to the code with complaince to code quality
+ - Added Doxygen comments
 
 Answers:
  - 

@@ -1,7 +1,5 @@
 #include "Class.h"
 
-
-// Destructor
 ToolArray::~ToolArray() noexcept
 {
 	std::cout << "ToolArray destructor called" << "\n";
@@ -20,7 +18,6 @@ ToolArray::~ToolArray() noexcept
 	}
 }
 
-// Overloaded Assignment Operator
 ToolArray& ToolArray::operator=(ToolArray const& source) &
 {
 	std::cout << "Overloaded assignment operator called" << "\n";
