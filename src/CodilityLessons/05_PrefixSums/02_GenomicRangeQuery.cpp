@@ -58,37 +58,32 @@ using namespace std;
 vector<int> solution(string &S, vector<int> &P, vector<int> &Q)
 {
 	vector<int> result;
-	vector<string> StringCombination;
+
 	for (int M = 0; M != P.size() ; ++M)
 	{
 		int difference = (Q.at(M) - P.at(M)) + 1;
-		/*string S2 = S.substr(P.at(M), difference);
-		std::sort(S2.begin(), S2.end());
+		string S2 = S.substr(P.at(M), difference);
+		/*std::sort(S2.begin(), S2.end());
 		auto last = std::unique(S2.begin(), S2.end());
 		S2.erase(last, S2.end());*/
-		StringCombination.push_back(S.substr(P.at(M), difference));
-				
-	}
-
-	for (std::vector<string>::iterator it = StringCombination.begin(); it != StringCombination.end(); ++it)
-	{
 		
-		if (it->find("A") != (-1))
+		if (S2.find("A") != (-1))
 		{
 			result.push_back(1);
 		}
-		else if (it->find("C") != (-1))
+		else if (S2.find("C") != (-1))
 		{
 			result.push_back(2);
 		}
-		else if (it->find("G") != (-1))
+		else if (S2.find("G") != (-1))
 		{
 			result.push_back(3);
 		}
-		else if (it->find("T") != (-1))
+		else if (S2.find("T") != (-1))
 		{
 			result.push_back(4);
-		}	
+		}
+				
 	}
 
 	return result;
