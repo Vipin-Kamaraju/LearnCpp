@@ -59,31 +59,66 @@ vector<int> solution(string &S, vector<int> &P, vector<int> &Q)
 {
 	vector<int> result;
 
-	for (int M = 0; M != P.size() ; ++M)
+	// Change in idea: Iterate through S and save 4vectors information of A,C,G & T
+	// Since the problem cannot be solved in time complexity we need to increase the space complexity
+	// Space complexity increased since 4 new vectors are now added
+
+	vector<int> A;
+	vector<int> C;
+	vector<int> G;
+	vector<int> T;
+
+	int ALastSeenAt = -1;
+	int CLastSeenAt = -1;
+	int GLastSeenAt = -1;
+	int TLastSeenAt = -1;
+	
+	for (size_t i = 0; i != S.size(); ++i)
 	{
-		int difference = (Q.at(M) - P.at(M)) + 1;
-		string S2 = S.substr(P.at(M), difference);
-		/*std::sort(S2.begin(), S2.end());
-		auto last = std::unique(S2.begin(), S2.end());
-		S2.erase(last, S2.end());*/
-		
-		if (S2.find("A") != (-1))
+		switch (S.at(i))
+		{
+		case 'A':
+			ALastSeenAt = i;
+			break;
+		case 'C':
+			CLastSeenAt = i;
+			break;
+		case 'G':
+			GLastSeenAt = i;
+				break;
+		case 'T':
+			TLastSeenAt = i;
+			break;
+		}
+		A.push_back(ALastSeenAt);
+		C.push_back(CLastSeenAt);
+		G.push_back(GLastSeenAt);
+		T.push_back(TLastSeenAt);
+
+	}
+
+	for (int m = 0; m < P.size();++m)
+	{
+		int P_val = P.at(m);
+		int Q_val = Q.at(m);
+
+		if (A.at(Q_val) >= P_val)
 		{
 			result.push_back(1);
 		}
-		else if (S2.find("C") != (-1))
+		else if (C.at(Q_val) >= P_val)
 		{
 			result.push_back(2);
 		}
-		else if (S2.find("G") != (-1))
+		else if (G.at(Q_val) >= P_val)
 		{
 			result.push_back(3);
 		}
-		else if (S2.find("T") != (-1))
+		else if (T.at(Q_val) >= P_val)
 		{
 			result.push_back(4);
 		}
-				
+			
 	}
 
 	return result;
