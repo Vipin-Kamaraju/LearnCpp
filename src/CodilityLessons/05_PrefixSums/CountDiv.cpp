@@ -26,12 +26,47 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 
 int solution(int A, int B, int K)
 {
+	/*
+	4 cases possible for K=2:
+	case 1 : A is divisible, B is not => Ans : int((B-A)/K) + 1
+	case 2 : A is divisible, B is divisible => Ans : int((B-A)/K) + 1
+	case 3 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
+	case 4 : A is not divisible, B is divisible => Ans : int((B-A)/K) + 1
+
+	1 cases possible for K=1:
+	case 2 : A is divisible, B is divisible => Ans : int((B-A)/K) + 1
+
+	4 cases possible for K=3:
+	case 1 : A is divisible, B is not => Ans : int((B-A)/K) + 1
+	case 2 : A is divisible, B is divisible => Ans : int((B-A)/K) + 1
+	case 3 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
+	case 4 : A is not divisible, B is divisible => Ans : int((B-A)/K) + 1
+	..
+
+	Check extremes for the above: A = 0, B = 0 
+	case Sol_2 : Others => Ans : int((B-A)/K) + 1 
+
+	Check extremes for the above: A = 2000000000, B = 2000000000 
+	case Sol_1 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
+	case Sol_2 : Others => Ans : int((B-A)/K) + 1
+
+	/////////////////////// Solution ///////////////////////////
+	To summarize : can be cut short into 2 cases
+	case Sol_1 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
+	case Sol_2 : Others => Ans : int((B-A)/K) + 1
+	///////////////////////////////////////////////////////////
+	*/
 	return A;
 }
 
 
 void main()
 {
+	int A = 6;
+	int B = 11;
+	int K = 2;
+
+	int result = solution(A, B, K);
 	system("PAUSE");
 }
 
