@@ -31,17 +31,24 @@ int solution(int A, int B, int K)
 	To summarize : can be cut short into 2 cases
 	case Sol_1 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
 	case Sol_2 : Others => Ans : int((B-A)/K) + 1
+
+	There is a flaw in this solution it does not cover all the cases.
+	Example 4,16, K = 5. Expected ans = 3. returned ans = 2. Sum off remainders = 4+1
+	Also 4,17, K=5. Sum off remainders = 4+2
+	4,19, K=6. Sum of remainder = 4+1
+	This above solution does not work for K=17. 
+	condition 3 : if K > A
+	4,22, K=6. Sum of remainder = 4+4 = 8
 	///////////////////////////////////////////////////////////
 	*/
-
-	bool IsADivisibleByK = (A%K);
-	bool IsBDivisibleByK = (B%K);
-
+	int m = (A%K);
+	bool IsADivisibleByK = ~(A%K);
+	bool IsBDivisibleByK = ~(B%K);
 
 	int result;
 	result = ((B - A) / K);
 
-	if ((IsADivisibleByK == true) && (IsBDivisibleByK == true))
+	if ((IsADivisibleByK == false) && (IsBDivisibleByK == false))
 	{
 	}
 	else
