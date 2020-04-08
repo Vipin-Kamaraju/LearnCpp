@@ -29,26 +29,21 @@ int solution(int A, int B, int K)
 	/*
 	/////////////////////// Solution ///////////////////////////
 	To summarize : can be cut short into 2 cases
-	case Sol_1 : A is not divisible, B is not divisible => Ans : int((B-A)/K)
-	case Sol_2 : Others => Ans : int((B-A)/K) + 1
+	case Sol_1 : A is not divisible, B is not divisible => Ans : int((B/K)-(A/K))
+	case Sol_2 : Others => Ans :  int((B/K)-(A/K)) + 1
 
-	There is a flaw in this solution it does not cover all the cases.
-	Example 4,16, K = 5. Expected ans = 3. returned ans = 2. Sum off remainders = 4+1
-	Also 4,17, K=5. Sum off remainders = 4+2
-	4,19, K=6. Sum of remainder = 4+1
-	This above solution does not work for K=17. 
-	condition 3 : if K > A
-	4,22, K=6. Sum of remainder = 4+4 = 8
+	Modified the logic in the solution:
+	Error found -> int((B-A)/K) is not the same as int(B/K) -int(A/K) 
 	///////////////////////////////////////////////////////////
 	*/
-	int m = (A%K);
-	bool IsADivisibleByK = ~(A%K);
-	bool IsBDivisibleByK = ~(B%K);
+
+	bool ANotDivisible = (A%K);
+	bool BNotDivisible = (B%K);
 
 	int result;
-	result = ((B - A) / K);
+	result = (int(B/K)-int(A/K));
 
-	if ((IsADivisibleByK == false) && (IsBDivisibleByK == false))
+	if ((ANotDivisible == true) && (BNotDivisible == true))
 	{
 	}
 	else
@@ -62,8 +57,8 @@ int solution(int A, int B, int K)
 
 void main()
 {
-	int A = 11;
-	int B = 345;
+	int A = 2000000000;
+	int B = 2000000000;
 	int K = 17;
 
 	int result = solution(A, B, K);
