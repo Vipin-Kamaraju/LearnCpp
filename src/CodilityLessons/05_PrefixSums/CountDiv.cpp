@@ -33,7 +33,8 @@ int solution(int A, int B, int K)
 	case Sol_2 : Others => Ans :  int((B/K)-(A/K)) + 1
 
 	Modified the logic in the solution:
-	Error found -> int((B-A)/K) is not the same as int(B/K) -int(A/K) 
+	Error found -> The modified solution does not work when B is divisible by K
+	Error case sample : 11,14, K=2 
 	///////////////////////////////////////////////////////////
 	*/
 
@@ -41,7 +42,14 @@ int solution(int A, int B, int K)
 	bool BNotDivisible = (B%K);
 
 	int result;
-	result = (int(B/K)-int(A/K));
+	if (BNotDivisible == true) {
+		result = (int(B / K) - int(A / K));
+	}
+	else
+	{
+		result = int((B - A) / K);
+	}
+	
 
 	if ((ANotDivisible == true) && (BNotDivisible == true))
 	{
@@ -57,8 +65,8 @@ int solution(int A, int B, int K)
 
 void main()
 {
-	int A = 2000000000;
-	int B = 2000000000;
+	int A = 11;
+	int B = 345;
 	int K = 17;
 
 	int result = solution(A, B, K);
