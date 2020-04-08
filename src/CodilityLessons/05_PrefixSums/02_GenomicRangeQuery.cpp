@@ -62,11 +62,11 @@ vector<int> solution(string &S, vector<int> &P, vector<int> &Q)
 	for (int M = 0; M != P.size() ; ++M)
 	{
 		int difference = (Q.at(M) - P.at(M)) + 1;
-		string S2 = S.substr(P.at(M), difference);
+		/*string S2 = S.substr(P.at(M), difference);
 		std::sort(S2.begin(), S2.end());
 		auto last = std::unique(S2.begin(), S2.end());
-		S2.erase(last, S2.end());
-		StringCombination.push_back(S2);
+		S2.erase(last, S2.end());*/
+		StringCombination.push_back(S.substr(P.at(M), difference));
 				
 	}
 
@@ -99,8 +99,8 @@ void main()
 {
 	string S = "CAGCCTA";
 	vector<string> DNA = { "A", "C", "G","T" };
-	vector<int> P = { 2,5,0 };
-	vector<int> Q = { 4,5,6 };
+	vector<int> P = { 2,5,0,2 };
+	vector<int> Q = { 4,5,6,4 };
 	vector<int> result;
 
 	result = solution(S, P, Q);
