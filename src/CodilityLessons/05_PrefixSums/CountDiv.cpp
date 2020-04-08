@@ -41,7 +41,7 @@ int solution(int A, int B, int K)
 	int result;
 	result = ((B - A) / K);
 
-	if ((IsADivisibleByK == false) && (IsBDivisibleByK == false))
+	if ((IsADivisibleByK == true) && (IsBDivisibleByK == true))
 	{
 	}
 	else
@@ -55,9 +55,9 @@ int solution(int A, int B, int K)
 
 void main()
 {
-	int A = 6;
-	int B = 11;
-	int K = 2;
+	int A = 11;
+	int B = 345;
+	int K = 17;
 
 	int result = solution(A, B, K);
 	std::cout << "result = " << result << "\n";
