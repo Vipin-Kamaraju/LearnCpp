@@ -43,16 +43,31 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 
 using namespace std;
 
+bool IsLessThanZero(int i)
+{
+	return (i < 0);
+}
 int solution(vector<int> &A)
 {
 	/*
 	** Approach : sort the array A.
+	** check the mid most element if they satisfy the condition
+	** Else I think it will fail for all other conditions
 	*/
 	int result = 0;
 
 	sort(A.begin(), A.end());
+	auto last = remove_if(A.begin(), A.end(), IsLessThanZero);
+	A.erase(last, A.end());
+
 	int N = A.size();
 	
+	N = N / 2;
+
+	if ((A[N] < A[N - 1] + A[N + 1]) && (A[N + 1] < A[N - 1] + A[N]) && (A[N - 1] < A[N] + A[N + 1]))
+	{
+		result = 1;
+	}
 
 	return result;
 }
@@ -60,7 +75,7 @@ int solution(vector<int> &A)
 void main()
 {
 
-	vector<int> A = { -3,1,2,-2,5,6 };
+	vector<int> A = {10,50,5,1};
 	int result = solution(A);
 	cout << result << endl;
 	system("PAUSE");
