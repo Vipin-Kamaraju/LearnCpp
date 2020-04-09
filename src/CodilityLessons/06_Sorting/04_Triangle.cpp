@@ -65,12 +65,16 @@ int solution(vector<int> &A)
 	
 	N = size / 2;
 
-	unsigned int total1 = A[N - 1] + A[N + 1];
-	unsigned int total2 = A[N - 1] + A[N];
-	unsigned int total3 = A[N] + A[N + 1];
+	unsigned int total1;
+	unsigned int total2;
+	unsigned int total3;
 
 	if (size >= 3)
 	{
+		total1 = A[N - 1] + A[N + 1];
+		total2 = A[N - 1] + A[N];
+		total3 = A[N] + A[N + 1];
+
 		if ((A[N] < total1 ) && (A[N + 1] < total2) && (A[N - 1] < total3))
 		{
 			result = 1;
