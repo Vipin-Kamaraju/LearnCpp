@@ -60,22 +60,43 @@ int solution(vector<int> &A)
 	auto last = remove_if(A.begin(), A.end(), IsLessThanZero);
 	A.erase(last, A.end());
 
-	int N = A.size();
+	int size = A.size();
+	int N;
 	
-	N = N / 2;
+	N = size / 2;
 
-	if ((A[N] < A[N - 1] + A[N + 1]) && (A[N + 1] < A[N - 1] + A[N]) && (A[N - 1] < A[N] + A[N + 1]))
+	unsigned int total1 = A[N - 1] + A[N + 1];
+	unsigned int total2 = A[N - 1] + A[N];
+	unsigned int total3 = A[N] + A[N + 1];
+
+	if (size >= 3)
 	{
-		result = 1;
+		if ((A[N] < total1 ) && (A[N + 1] < total2) && (A[N - 1] < total3))
+		{
+			result = 1;
+		}
 	}
+	if (size >= 4)
+	{
+		N = N + 1;
+		total1 = A[N - 1] + A[N + 1];
+		total2 = A[N - 1] + A[N];
+		total3 = A[N] + A[N + 1];
+		if ((A[N] < total1) && (A[N + 1] < total2) && (A[N - 1] < total3))
+		{
+			result = 1;
+		}
+	}
+	
 
 	return result;
 }
 
 void main()
 {
-
-	vector<int> A = {10,50,5,1};
+	//vector<int> A = {1,1,2,3,5};
+	//vector<int> A = { 1,1,1,1,5,5,5 };
+	vector<int> A = { 2147483647,2147483647,2147483647 };
 	int result = solution(A);
 	cout << result << endl;
 	system("PAUSE");
