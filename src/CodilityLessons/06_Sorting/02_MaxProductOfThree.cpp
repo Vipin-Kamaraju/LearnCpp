@@ -51,7 +51,26 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
-	int result;
+	/*
+	** Approach : sort the array A. Here you will get the max elements on the extreme positions
+	** We only need the extreme 5 elements to find the max triplet
+	** This solution fails if all the elements are negative. 
+	** hence additional case has to be written if all 5 elements are negative.
+	*/
+	int result = 0;
+
+	sort(A.begin(), A.end());
+	int N = A.size();
+	
+	if ((A[N - 2] * A[N - 3]) > (A[0] * A[1]))
+	{
+		result = (A[N - 2] * A[N - 3]) * (A[N - 1]);
+	}
+	else
+	{
+		result = (A[0] * A[1]) * (A[N - 1]);
+	}
+	
 
 	return result;
 }
@@ -59,7 +78,7 @@ int solution(vector<int> &A)
 void main()
 {
 
-	vector<int> A = { 2,1,1,2,3,1 };
+	vector<int> A = { -3,1,2,-2,5,6 };
 	int result = solution(A);
 	cout << result << endl;
 	system("PAUSE");
