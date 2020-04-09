@@ -61,16 +61,21 @@ int solution(vector<int> &A)
 
 	sort(A.begin(), A.end());
 	int N = A.size();
-	
-	if ((A[N - 2] * A[N - 3]) > (A[0] * A[1]))
+	if (((A[N - 3]) >= 0) | ((A[N - 2]) >= 0) | ((A[N - 1]) >= 0) | ((A[1]) >= 0) | (((A[0]) >= 0)))
 	{
-		result = (A[N - 2] * A[N - 3]) * (A[N - 1]);
+		if ((A[N - 2] * A[N - 3]) > (A[0] * A[1]))
+		{
+			result = (A[N - 2] * A[N - 3]) * (A[N - 1]);
+		}
+		else
+		{
+			result = (A[0] * A[1]) * (A[N - 1]);
+		}
 	}
 	else
 	{
-		result = (A[0] * A[1]) * (A[N - 1]);
+		result = (A[N - 1] * A[N - 2] * A[N - 3]);
 	}
-	
 
 	return result;
 }
