@@ -57,53 +57,45 @@ using namespace std;
 int solution(vector<int> &A)
 {
 	/*
-	** Idea is to use something similar to a LUT. By creating an array with the sums
+	** Idea is to use something similar to a LUT. By creating an array with the sums. This idea did not give 100%performance
 	** Refer to the pdf provided in the lessons on Codility
+	** Mathematically prooved that only slices of size 2 and size 3 is sufficient to find the minIdx
+	** Theoretical proof for this problem description can be found here:
+	** https://github.com/daotranminh/playground/blob/master/src/codibility/MinAvgTwoSlice/proof.pdf
 	*/
 
-	int result = 0;
-	vector<int> ArraySum;
-	int sum = 0;
 
-	float slice = 0;
-	float minSliceValue;
-	bool firstLoop = true;
-	int min_Q_Pos;
-	float slice2D[7][7] = { 0 };
-	ArraySum.push_back(sum);
+	double sum = 0;
+	double avg;
+	double minAvg = std::numeric_limits<double>::max();
+	unsigned int minIdx;
 	
-	for (std::vector<int>::iterator it = A.begin(); it != A.end(); ++it)
+	for (unsigned int idx = 0; idx < A.size() - 1; ++idx)
 	{
-		sum = sum + (*it);
-		ArraySum.push_back(sum);
-	}
+		sum = A[idx]+A[idx+1];
+		avg = sum / 2;
 
-	int counter = 2;
-	for (int P_Pos = 0; P_Pos < (A.size() - 1); counter++)
-	{
-		slice = float(ArraySum.at(P_Pos + counter) - ArraySum.at(P_Pos)) / float(counter);
-
-		if (firstLoop)
+		if (avg < minAvg)
 		{
-			minSliceValue = slice;
-			firstLoop = false;
-			result = P_Pos;
+			minIdx = idx;
+			minAvg = avg;
 		}
 
-		if (slice < minSliceValue)
+		if ((idx + 2) < A.size())
 		{
-			minSliceValue = slice;
-			result = P_Pos;
-		}
-
-		if ((P_Pos + counter) >= A.size())
-		{
-			counter = 1;
-			P_Pos++;
+			sum = sum + A[idx + 2];
+			avg = sum / 3;
+			if (avg < minAvg)
+			{
+				minIdx = idx;
+				minAvg = avg;
+			}
 		}
 	}
 
-	return result;
+	
+
+	return minIdx;
 }
 
 
