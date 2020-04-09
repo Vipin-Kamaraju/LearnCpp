@@ -29,12 +29,21 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 
 using namespace std;
 
+int solution(vector<int> &A)
+{
+	sort(A.begin(), A.end());
+	auto last = unique(A.begin(), A.end());
+	A.erase(last, A.end());
 
+	return A.size();
+}
 
 void main()
 {
 
-	
+	vector<int> A = { 2,1,1,2,3,1 };
+	int result = solution(A);
+	cout << result << endl;
 	system("PAUSE");
 }
 
