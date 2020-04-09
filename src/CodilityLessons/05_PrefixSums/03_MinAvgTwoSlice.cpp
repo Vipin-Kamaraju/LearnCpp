@@ -77,8 +77,8 @@ int solution(vector<int> &A)
 		sum = sum + (*it);
 		ArraySum.push_back(sum);
 	}
-
-	for (int P_Pos = 0; P_Pos < A.size() ; ++P_Pos)
+	int count = 0;
+	/*for (int P_Pos = 0; P_Pos < A.size() ; ++P_Pos)
 	{
 		for (int Q_Pos = P_Pos + 1; Q_Pos < A.size(); ++Q_Pos)
 		{
@@ -98,7 +98,54 @@ int solution(vector<int> &A)
 				result = P_Pos;
 				min_Q_Pos = Q_Pos;
 			}
+			count++;
 		}
+	}*/
+
+	/*for (int P_Pos = 0;P_Pos < A.size(); ++P_Pos)
+	{
+		slice = ArraySum.at(P_Pos + 1 + 1) - ArraySum.at(P_Pos) / P_Pos + 1 - P_Pos + 1;
+		slice = ArraySum.at(P_Pos + 1 + 2) - ArraySum.at(P_Pos) / P_Pos + 2 - P_Pos + 1;
+		slice = ArraySum.at(P_Pos + 1 + 3) - ArraySum.at(P_Pos) / P_Pos + 3 - P_Pos + 1;
+		slice = ArraySum.at(P_Pos + 1 + 4) - ArraySum.at(P_Pos) / P_Pos + 4 - P_Pos + 1;
+		slice = ArraySum.at(P_Pos + 1 + 5) - ArraySum.at(P_Pos) / P_Pos + 5 - P_Pos + 1;
+		slice = ArraySum.at(P_Pos + 1 + 6) - ArraySum.at(P_Pos) / P_Pos + 6 - P_Pos + 1;
+	}
+
+	for (int P_Pos = 0;P_Pos < A.size(); ++P_Pos)
+	{
+		slice = ArraySum.at(P_Pos + 2) - ArraySum.at(P_Pos) / 2;
+		slice = ArraySum.at(P_Pos + 3) - ArraySum.at(P_Pos) / 3;
+		slice = ArraySum.at(P_Pos + 4) - ArraySum.at(P_Pos) / 4;
+		slice = ArraySum.at(P_Pos + 5) - ArraySum.at(P_Pos) / 5;
+		slice = ArraySum.at(P_Pos + 6) - ArraySum.at(P_Pos) / 6;
+		slice = ArraySum.at(P_Pos + 7) - ArraySum.at(P_Pos) / 7;
+	}
+*/
+	int counter = 2;
+	for (int P_Pos = 0; P_Pos < (A.size() - 1); counter++)
+	{
+		slice = float(ArraySum.at(P_Pos + counter) - ArraySum.at(P_Pos)) / float(counter);
+
+		if (firstLoop)
+		{
+			minSliceValue = slice;
+			firstLoop = false;
+			result = P_Pos;
+		}
+
+		if (slice < minSliceValue)
+		{
+			minSliceValue = slice;
+			result = P_Pos;
+		}
+
+		if ((P_Pos + counter) >= A.size())
+		{
+			counter = 1;
+			P_Pos++;
+		}
+		count++;
 	}
 
 	return result;
