@@ -44,8 +44,11 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
+	/*
+	** Logic: maxA < minB || minA > maxB
+	** If either if the above condition is true then A does not intersect B
+	*/
 	int result = 0;
-	vector<int> copyA(A.begin(), A.end());
 	vector<int> minValues;
 	vector<int> maxValues;
 	int minValue;
@@ -57,11 +60,11 @@ int solution(vector<int> &A)
 		return result;
 	}
 
-	for (int m = 0; m < copyA.size(); ++m)
+	for (int m = 0; m < A.size(); ++m)
 	{
-		minValue = m - copyA[m];
+		minValue = m - A[m];
 		minValues.push_back(minValue);
-		maxValue = m + copyA[m];
+		maxValue = m + A[m];
 		maxValues.push_back(maxValue);
 	
 	}
@@ -71,27 +74,24 @@ int solution(vector<int> &A)
 	int minValue2;
 	int maxValue2;
 
-	for (int r = 0; r < copyA.size(); ++r)
+	for (int r = 0; r < A.size(); ++r)
 	{
-		minValue2 = r - copyA[r];
-		maxValue2 = r + copyA[r];
+		minValue2 = r - A[r];
+		maxValue2 = r + A[r];
 
-		if ((minValue2 <= 0) && (maxValue2 >= A.size() - 1))
+		for (int n = 0; n < minValues.size(); ++n)
 		{
-			discIntersections = discIntersections + (A.size() - 1);
-		}
-		else
-		{
-			for (int n = 0; n < minValues.size(); ++n)
+			if((maxValue2 < minValues[n]) || (minValue2 > maxValues[n]))
+			{ }
+			else
 			{
-				if ((minValue2 <= minValues[r]) && (maxValue2 >= minValues[r]))
-				{
-					discIntersections++;
-				}
+				discIntersections++;
 			}
 		}
 
 	}
+
+	discIntersections = discIntersections - A.size();
 
 	result = discIntersections / 2;
 
@@ -105,7 +105,8 @@ int solution(vector<int> &A)
 
 void main()
 {
-	vector<int> A = { 1,5,2,1,4,0 };
+	//vector<int> A = { 1,5,2,1,4,0 };
+	vector<int> A = { 3,3,3,5,1,2 };
 	int result = solution(A);
 	cout << result << endl;
 	system("PAUSE");
