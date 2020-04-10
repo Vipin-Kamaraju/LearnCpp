@@ -49,18 +49,18 @@ int solution(vector<int> &A)
 	** If either if the above condition is true then A does not intersect B
 	*/
 	int result = 0;
-	vector<int> minValues;
-	vector<int> maxValues;
-	int minValue;
-	int maxValue;
+	vector<long long int> minValues;
+	vector<long long int> maxValues;
+	long long int minValue;
+	long long int maxValue;
 	int discIntersections = 0;
 
-	if (A.size() == 0)
+	if ((A.size() == 0) || (A.size() == 1))
 	{
 		return result;
 	}
 
-	for (int m = 0; m < A.size(); ++m)
+	for (long long int m = 0; m < A.size(); ++m)
 	{
 		minValue = m - A[m];
 		minValues.push_back(minValue);
@@ -69,10 +69,10 @@ int solution(vector<int> &A)
 	
 	}
 
-	int minValue2;
-	int maxValue2;
+	long long int minValue2;
+	long long int maxValue2;
 
-	for (int r = 0; r < A.size(); ++r)
+	for (long long int r = 0; r < A.size(); ++r)
 	{
 		minValue2 = r - A[r];
 		maxValue2 = r + A[r];
@@ -80,7 +80,9 @@ int solution(vector<int> &A)
 		for (int n = 0; n < minValues.size(); ++n)
 		{
 			if((maxValue2 < minValues[n]) || (minValue2 > maxValues[n]))
-			{ }
+			{
+				cout << "no intersection" << endl;
+			}
 			else
 			{
 				discIntersections++;
@@ -88,9 +90,8 @@ int solution(vector<int> &A)
 		}
 
 	}
-
+	
 	discIntersections = discIntersections - A.size();
-
 	result = discIntersections / 2;
 
 	if (result > 10000000)
@@ -103,8 +104,12 @@ int solution(vector<int> &A)
 
 void main()
 {
+
 	//vector<int> A = { 1,5,2,1,4,0 };
-	vector<int> A = { 3,3,3,5,1,2 };
+	//vector<int> A = { 3,3,3,5,1,2 };
+	//vector<int> A = { 1,2147483647,0 };
+	//vector<int> A = { 2147483647,2147483647 };
+	vector<int> A = { 5 };
 	int result = solution(A);
 	cout << result << endl;
 	system("PAUSE");
