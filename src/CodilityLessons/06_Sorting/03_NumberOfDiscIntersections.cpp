@@ -69,8 +69,6 @@ int solution(vector<int> &A)
 	
 	}
 
-	sort(minValues.begin(), minValues.end());
-
 	int minValue2;
 	int maxValue2;
 
