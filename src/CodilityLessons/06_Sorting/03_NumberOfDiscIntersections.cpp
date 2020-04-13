@@ -42,9 +42,12 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <map>
 #include <cassert>
 
+#define MAX_DISC_INTERSECTIONS 1e7
 using namespace std;
 
-bool checkRHS(const std::pair<long long int, long long int>& comparisionValue, const std::pair<long long int, long long int>& currentVal)
+typedef long long int l_int;
+
+bool checkRHS(const std::pair<l_int, l_int>& comparisionValue, const std::pair<l_int, l_int>& currentVal)
 {
 	return (comparisionValue.first < currentVal.first);
 }
@@ -52,20 +55,20 @@ bool checkRHS(const std::pair<long long int, long long int>& comparisionValue, c
 int solution(vector<int> &A)
 {
 
-	vector<std::pair<long long int,long long int>> A_range;
-	long long int A_size = A.size();
-	long long int minValue;
-	long long int maxValue;
+	vector<std::pair<l_int,l_int>> A_range;
+	l_int A_size = A.size();
+	l_int minValue;
+	l_int maxValue;
 	int count;
-	long long int discIntersections = 0;
-	long long int zeroVal = 0;
+	l_int discIntersections = 0;
+	l_int zeroVal = 0;
 
 	if (A.size() == 0 | A.size() == 1)
 	{
 		return 0;
 	}
 
-	for (long long int m = 0; m < A_size; ++m)
+	for (l_int m = 0; m < A_size; ++m)
 	{
 		minValue = m - A[m];
 		minValue = max(zeroVal, minValue);
@@ -73,12 +76,12 @@ int solution(vector<int> &A)
 		maxValue = min((A_size -1 ), maxValue);
 
 
-		A_range.push_back(std::pair<long long int, long long int>(minValue, maxValue));
+		A_range.push_back(std::pair<l_int, l_int>(minValue, maxValue));
 	}
 
 	sort(A_range.begin(), A_range.end());
 
-	for (long long int n = 0; n < A_range.size(); ++n)
+	for (l_int n = 0; n < A_range.size(); ++n)
 	{
 		long discEnd = A_range[n].second;
 
@@ -91,7 +94,7 @@ int solution(vector<int> &A)
 		discIntersections = discIntersections + count;
 	}
 
-	if (discIntersections > 1e7)
+	if (discIntersections > MAX_DISC_INTERSECTIONS)
 	{
 		return -1;
 	}
