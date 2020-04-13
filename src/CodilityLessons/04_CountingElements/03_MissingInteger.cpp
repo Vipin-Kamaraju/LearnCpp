@@ -42,17 +42,28 @@ int MissingInteger(vector<int> &A)
 	int element = copyA[0];
 	if (element > 1)
 		return 1;
+
+	element = 1;
 	vector<int> MissingElementList;
 	int lastElement;
 	MissingElementList.clear();
-	for (auto i : copyA)
+
+	vector<int>::iterator it = find(copyA.begin(), copyA.end(), 1);
+	//int Pos_elem1 = distance(A.begin(), it);
+	if (it == copyA.end())
+	{ 
+		return 1;
+	}
+
+
+	for (it ; it != copyA.end(); ++it)
 	{
-		if (element != i)
+		if (element != *it)
 		{
 			MissingElementList.push_back(element);
 		}
 		element++;
-		lastElement = i;
+		lastElement = *it;
 	}
 
 	if (!MissingElementList.empty())
@@ -65,7 +76,12 @@ int MissingInteger(vector<int> &A)
 	}
 	else
 	{
-		return (lastElement + 1);
+		if (lastElement > 0)
+		{
+			return (lastElement + 1);
+		}
+		else
+			return 1;
 	}
 }
 
@@ -73,7 +89,7 @@ void main()
 {
 	int N = 5;
 	//vector<int> A = {1,2,6,6,5,3,4,4,6,1,4,4};
-	vector<int> A = {1,3,6,4,1,2 };
+	vector<int> A = {-100,1,3,6,4,1,2,100 };
 	int result;
 	result = MissingInteger(A);
 	
