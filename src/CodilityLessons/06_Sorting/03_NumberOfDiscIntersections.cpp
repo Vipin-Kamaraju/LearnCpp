@@ -39,78 +39,91 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
+#include <cassert>
 
 using namespace std;
 
+bool checkRHS(const std::pair<long long int, long long int>& comparisionValue, const std::pair<long long int, long long int>& currentVal)
+{
+	return (comparisionValue.first < currentVal.first);
+}
+
 int solution(vector<int> &A)
 {
-	/*
-	** Logic: maxA < minB || minA > maxB
-	** If either if the above condition is true then A does not intersect B
-	*/
-	int result = 0;
-	vector<long long int> minValues;
-	vector<long long int> maxValues;
+
+	vector<std::pair<long long int,long long int>> A_range;
+	long long int A_size = A.size();
 	long long int minValue;
 	long long int maxValue;
-	int discIntersections = 0;
+	int count;
+	long long int discIntersections = 0;
+	long long int zeroVal = 0;
 
-	if ((A.size() == 0) || (A.size() == 1))
+	if (A.size() == 0 | A.size() == 1)
 	{
-		return result;
+		return 0;
 	}
 
-	for (long long int m = 0; m < A.size(); ++m)
+	for (long long int m = 0; m < A_size; ++m)
 	{
 		minValue = m - A[m];
-		minValues.push_back(minValue);
+		minValue = max(zeroVal, minValue);
 		maxValue = m + A[m];
-		maxValues.push_back(maxValue);
-	
+		maxValue = min((A_size -1 ), maxValue);
+
+
+		A_range.push_back(std::pair<long long int, long long int>(minValue, maxValue));
 	}
 
-	long long int minValue2;
-	long long int maxValue2;
+	sort(A_range.begin(), A_range.end());
 
-	for (long long int r = 0; r < A.size(); ++r)
+	for (long long int n = 0; n < A_range.size(); ++n)
 	{
-		minValue2 = r - A[r];
-		maxValue2 = r + A[r];
+		long discEnd = A_range[n].second;
 
-		for (int n = 0; n < minValues.size(); ++n)
-		{
-			if((maxValue2 < minValues[n]) || (minValue2 > maxValues[n]))
-			{
-				cout << "no intersection" << endl;
-			}
-			else
-			{
-				discIntersections++;
-			}
-		}
+		auto it = upper_bound(A_range.begin(), A_range.end(), make_pair(discEnd, zeroVal), checkRHS );
 
+		count = distance(A_range.begin(), it);
+
+		count = count - (n + 1);
+		
+		discIntersections = discIntersections + count;
 	}
-	
-	discIntersections = discIntersections - A.size();
-	result = discIntersections / 2;
 
-	if (result > 10000000)
+	if (discIntersections > 1e7)
 	{
-		result = -1;
+		return -1;
 	}
 
-	return result;
+	return discIntersections;
 }
 
 void main()
 {
 
-	//vector<int> A = { 1,5,2,1,4,0 };
-	//vector<int> A = { 3,3,3,5,1,2 };
-	//vector<int> A = { 1,2147483647,0 };
-	//vector<int> A = { 2147483647,2147483647 };
-	vector<int> A = { 5 };
+	vector<int> A = { 1,5,2,1,4,0 };
+	vector<int> B = { 3,3,3,5,1,2 }; 
+	vector<int> C = { 1,2147483647,0 }; // result 2
+	vector<int> D = { 1,0,2147483647 }; // result 3
+	vector<int> E = { 2147483647,2147483647 };
+	vector<int> F = { 5 };
+	vector<int> G = { 0,0,0,0,5}; //result 4
+	vector<int> H = { 0,0,0,0,0 }; // result 0
+	vector<int> I = { 1,2147483647,0,2147483647 }; // result 4
 	int result = solution(A);
+	
+	
+	assert(solution(A) == 11);
+	assert(solution(B) == 15);
+	assert(solution(C) == 2);
+	assert(solution(D) == 3);
+	assert(solution(E) == 1);
+	assert(solution(F) == 0);
+	assert(solution(G) == 4);
+	assert(solution(H) == 0);
+	assert(solution(I) == 5);
+
 	cout << result << endl;
 	system("PAUSE");
 }
