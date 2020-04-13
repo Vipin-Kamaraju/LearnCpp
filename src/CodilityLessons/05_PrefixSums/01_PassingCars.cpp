@@ -72,14 +72,23 @@ int PassingCars(vector<int> &A)
 		if (i == 0)
 			passingCarsList.push_back(numberOfOnes);
 		else if (i == 1)
-			numberOfOnes--;
+		{
+			numberOfOnes = (numberOfOnes - 1);
+			//cout << "numberOfOnes = " << numberOfOnes << endl;
+		}
 	}
-	int result = 0;
+	unsigned int result = 0; //2,147,483,647 since the test case failed when it has crossed this range
+							 // It has flipped the bit when it crossed this range (50000 * 42950 )
+
 	for (auto m : passingCarsList)
+	{
 		result = result + m;
-	
-	if (result > 1, 000, 000, 000)
-		result = -1;
+		if (result > 1000000000)
+		{
+			result = -1;
+			break;
+		}
+	}
 
 	return result;
 }
@@ -89,11 +98,15 @@ void main()
 	int N = 5;
 	//vector<int> A = {1,2,6,6,5,3,4,4,6,1,4,4};
 	//vector<int> A = { 0,1,1,0,1,1 }; //8 - 2 = 6
-	vector<int> A = { 0,1,1,0,1,0,1 }; //12 - 5 = 7
+	//vector<int> A = { 0,1,1,0,1,0,1 }; //12 - 5 = 7
 	//vector<int> A = {0,1,0,1,1}; // 6 - 1 = 5
+	//vector<int> A = { 0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	//vector<int> A = { 1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	vector<int> A = { 1,1,1,1,1,1,1,1,1,1,1,1,1};
 	int result;
 	result = PassingCars(A);
 	
 	cout << "\nresult = " << result << endl;
 	system("PAUSE");
 }
+
