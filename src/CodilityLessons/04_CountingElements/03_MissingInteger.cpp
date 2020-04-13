@@ -81,7 +81,7 @@ void IncrementAll(int X , vector<int> &A)
 vector<int> MaxCounters(int N, vector<int> &A)
 {
 	vector<int> countersList(N,0);
-	int X;
+	//int X;
 	vector<int> matchingElem; // list of elements matching N+1
 	int length; // ditance from A.begin to matchingElem
 
@@ -115,7 +115,6 @@ vector<int> MaxCounters(int N, vector<int> &A)
 			// check if the value already reaches N+1
 			if ((N + 1) == *counterIt)
 			{
-				counter = 0;
 				break;
 			}
 			
@@ -130,9 +129,16 @@ vector<int> MaxCounters(int N, vector<int> &A)
 			}
 		}
 		
-		currentPos = lastPos;
-		prevMaxElemLocCounter = *(max_element(localCounterList.begin(), localCounterList.end()));
-		localCounterList.empty();
+		currentPos = lastPos +1;
+		if (!localCounterList.empty())
+		{
+			prevMaxElemLocCounter = *(max_element(localCounterList.begin(), localCounterList.end()));
+		}
+		else
+		{
+			prevMaxElemLocCounter = 0;
+		}
+		localCounterList.clear();
 		maxElemLocCounter = maxElemLocCounter + prevMaxElemLocCounter;
 		//globalCounterList.push_back(prevMaxElemLocCounter);
 	}
@@ -146,7 +152,7 @@ vector<int> MaxCounters(int N, vector<int> &A)
 		for (vector<int>::iterator it = (copyA.begin() + currentPos); it != copyA.end(); ++it)
 		{
 			increment = *it;
-			if(increment != (N+1) )
+			//if(increment != (N+1) )
 			Increment(increment, countersList);
 		}
 	}
@@ -157,8 +163,8 @@ vector<int> MaxCounters(int N, vector<int> &A)
 void main()
 {
 	int N = 5;
-	vector<int> A = {1,2,6,5,3,4,4,6,1,4,4};
-	//vector<int> A = {3,4,4,6,1,4,4 };
+	//vector<int> A = {1,2,6,6,5,3,4,4,6,1,4,4};
+	vector<int> A = {3,4,4,6,1,4,4 };
 	vector<int> result;
 	result = MaxCounters(N, A);
 	for(auto i : result)
