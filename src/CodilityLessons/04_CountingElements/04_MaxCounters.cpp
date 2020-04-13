@@ -70,40 +70,95 @@ void Increment(int X,vector<int> &A)
 	A.at(X-1) = A.at(X-1) + 1;
 }
 
-void IncrementAll(vector<int> &A)
+void IncrementAll(int X , vector<int> &A)
 {
-	int max = *max_element(A.begin(), A.end());
 	for (int i =0; i < A.size(); ++i)
 	{
-		A[i] = max;
+		A[i] = X;
 	}
 }
 
 vector<int> MaxCounters(int N, vector<int> &A)
 {
-	vector<int> copyA(N,0);
+	vector<int> countersList(N,0);
 	int X;
+	vector<int> matchingElem; // list of elements matching N+1
+	int length; // ditance from A.begin to matchingElem
 
+	// find all the N+1 elements in the list
 	for (vector<int>::iterator itr = A.begin(); itr != A.end(); ++itr)
 	{
-		X = *itr;
-		if ((X <= N) && (X >= 1) && (X != (N + 1)))
+		if ((N + 1) == (*itr))
 		{
-			Increment(X, copyA);
-		}
-		else if (X == (N + 1))
-		{
-			IncrementAll(copyA);
+			length = distance(A.begin(), itr);
+			matchingElem.push_back(length);
 		}
 	}
-	
-	return copyA;
+
+	int lastPos;
+	int currentPos = 0;
+	int counter = 1;
+	vector<int> localCounterList;
+	//vector<int> globalCounterList;
+	vector<int> copyA = A;
+	int maxElemLocCounter = 0 ;
+	int prevMaxElemLocCounter = 0;
+
+	// partial sort the elements and check for max counters
+	for (auto it :  matchingElem)
+	{
+		lastPos = it;
+		sort((copyA.begin()+ currentPos), (copyA.begin() + lastPos));
+		for (vector<int>::iterator counterIt = (copyA.begin() + currentPos); counterIt != (copyA.begin() + lastPos); ++counterIt)
+		{
+			
+			// check if the value already reaches N+1
+			if ((N + 1) == *counterIt)
+			{
+				counter = 0;
+				break;
+			}
+			
+			if ((*counterIt) == *(counterIt + 1))
+			{
+				counter++;
+			}
+			else
+			{
+				localCounterList.push_back(counter);
+				counter = 1;
+			}
+		}
+		
+		currentPos = lastPos;
+		prevMaxElemLocCounter = *(max_element(localCounterList.begin(), localCounterList.end()));
+		localCounterList.empty();
+		maxElemLocCounter = maxElemLocCounter + prevMaxElemLocCounter;
+		//globalCounterList.push_back(prevMaxElemLocCounter);
+	}
+
+	IncrementAll(maxElemLocCounter, countersList);
+
+	int increment;
+
+	if ((copyA.begin() + currentPos) != copyA.end())
+	{
+		for (vector<int>::iterator it = (copyA.begin() + currentPos); it != copyA.end(); ++it)
+		{
+			increment = *it;
+			if(increment != (N+1) )
+			Increment(increment, countersList);
+		}
+	}
+
+	return countersList;
 }
 
 void main()
 {
 	int N = 5;
-	vector<int> A = {3,4,4,6,1,4,4};
+	vector<int> A = {1,2,6,5,3,4,4,6,1,4,4};
+	//vector<int> A = {3,4,4,6,1,4,4 };
 	vector<int> result;
 	result = MaxCounters(N, A);
 	for(auto i : result)
