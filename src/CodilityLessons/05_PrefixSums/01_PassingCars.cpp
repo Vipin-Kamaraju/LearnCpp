@@ -77,6 +77,9 @@ int PassingCars(vector<int> &A)
 	int result = 0;
 	for (auto m : passingCarsList)
 		result = result + m;
+	
+	if (result > 1, 000, 000, 000)
+		result = -1;
 
 	return result;
 }
