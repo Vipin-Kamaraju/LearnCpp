@@ -49,37 +49,16 @@ each element of array A is an integer that can have one of the following values:
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
-int PassingCars(vector<int> &A)
+// function to compute result
+template<typename X , typename Y>
+void resultAddition(X &result, Y &passingCarsList)
 {
-	vector<int> copyA = A;
-	//sort(copyA.begin(),copyA.end());
-	int numberOfZeros = 0;
-	int numberOfOnes = 0;
-	for (auto i : copyA)
-	{
-		if (i == 0)
-			numberOfZeros++;
-		else if (i == 1)
-			numberOfOnes++;
-	}
-
-	vector<int> passingCarsList;
-	for (auto i : copyA)
-	{
-		if (i == 0)
-			passingCarsList.push_back(numberOfOnes);
-		else if (i == 1)
-		{
-			numberOfOnes = (numberOfOnes - 1);
-			//cout << "numberOfOnes = " << numberOfOnes << endl;
-		}
-	}
-	unsigned int result = 0; //2,147,483,647 since the test case failed when it has crossed this range
-							 // It has flipped the bit when it crossed this range (50000 * 42950 )
-
 	for (auto m : passingCarsList)
 	{
 		result = result + m;
@@ -89,24 +68,136 @@ int PassingCars(vector<int> &A)
 			break;
 		}
 	}
+}
+
+// function overloading using templates
+template<>
+void resultAddition(unsigned int &result, vector<int> &passingCarsList)
+{
+	for (auto m : passingCarsList)
+	{
+		result = result + m;
+		if (result > 1000000000)
+		{
+			result = -1;
+			break;
+		}
+	}
+}
+
+// function to compute number of zeros and ones
+template<typename X, typename Y, typename Z>
+void countZerosOnes(X &A, Y &numberOfZeros, Z &numberOfOnes)
+{
+	for (auto i : A)
+	{
+		if (i == 0)
+			numberOfZeros++;
+		else if (i == 1)
+			numberOfOnes++;
+	}
+}
+
+// function to count number of passing cars
+template<typename X, typename Y, typename Z>
+void numPassingCars(X &A, Y &passingCarsList, Z &numberOfOnes)
+{
+	for (auto i : A)
+	{
+		if (i == 0)
+			passingCarsList.push_back(numberOfOnes);
+		else if (i == 1)
+		{
+			numberOfOnes = (numberOfOnes - 1);
+		}
+	}
+}
+
+int PassingCars(vector<int> &A)
+{
+	int numberOfZeros = 0;
+	int numberOfOnes = 0;
+	vector<int> passingCarsList;
+
+	unsigned int result = 0; //2,147,483,647 since the test case failed when it has crossed this range
+							 // It has flipped the bit when it crossed this range (50000 * 42950 )
+
+	// count number of zeros and ones
+	countZerosOnes(A, numberOfZeros , numberOfOnes);
+
+	// count number of passing cars
+	numPassingCars(A, passingCarsList , numberOfOnes);
+	
+	// compute the result
+	resultAddition(result, passingCarsList);
 
 	return result;
 }
 
-void main()
+template<typename X, typename Y>
+void ReadInputFile()
 {
-	int N = 5;
-	//vector<int> A = {1,2,6,6,5,3,4,4,6,1,4,4};
-	//vector<int> A = { 0,1,1,0,1,1 }; //8 - 2 = 6
-	//vector<int> A = { 0,1,1,0,1,0,1 }; //12 - 5 = 7
-	//vector<int> A = {0,1,0,1,1}; // 6 - 1 = 5
-	//vector<int> A = { 0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	//vector<int> A = { 1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	vector<int> A = { 1,1,1,1,1,1,1,1,1,1,1,1,1};
+
+}
+
+void main()
+{	
+	int N;
+	vector<int> A;
+	vector<vector<int>> ListA;
 	int result;
-	result = PassingCars(A);
-	
-	cout << "\nresult = " << result << endl;
+
+	// Enter N value
+	// Later change this to the next line in the Input file or read with a delimiter
+	cout << " Enter N value = ";
+	cin >> N;
+
+	// Input file for vector
+	ifstream InputFile("InputFile.txt");
+	string strLine;
+	//string str;
+	int c;
+	if (InputFile.is_open())
+	{
+		while (getline(InputFile, strLine))
+		{
+			cout << "Entire line " << strLine << endl;
+			istringstream str(strLine);
+			
+			// This method is not suggested since the element is read not as an integer but as a character
+			// This means 25 will be read as 2 and 5
+			/*strLine.erase(remove_if(strLine.begin(), strLine.end(), isspace),strLine.end());
+			for (string::iterator it = strLine.begin(); it != strLine.end(); ++it)
+			{
+				A.push_back(*it);
+			}*/
+
+			str >> c;
+			while(str)
+			{
+				A.push_back(c);
+				str >> c;
+			}
+			for (auto i : A)
+			{
+				cout << "i = " << i << endl;
+			}
+			ListA.push_back(A);
+			A.erase(A.begin(), A.end());
+		}
+	}
+	else
+	{
+		cout << "Error opening file" << endl;
+	}
+	InputFile.close();
+
+	for (auto A : ListA)
+	{
+		result = PassingCars(A);
+
+		cout << "\nresult = " << result << endl;
+	}
 	system("PAUSE");
 }
 
