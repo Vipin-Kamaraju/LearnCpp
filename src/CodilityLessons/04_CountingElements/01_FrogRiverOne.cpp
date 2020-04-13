@@ -56,48 +56,23 @@ using namespace std;
 
 int FrogRiverOne(int X, vector<int> &A)
 {
-	vector<int> copyA = A;
-	sort(copyA.begin(), copyA.end());
-	int LeafPos = 1;
-	int iterationNum = 1;
-
-	for (vector<int>::iterator i = copyA.begin(); i != copyA.end(); ++i)
-	{
-		//check all leaves from 1 to X
-		if (LeafPos == *i)
-			LeafPos++;
-		iterationNum++;
-
-		if (LeafPos == X)
-		{
-			cout << "iterationNum = " << iterationNum << endl;
-			break;
-		}
-	}
-
-	if (LeafPos < X)
-	{
-		cout << "Frog cannot reach the other end" << endl;
-		return -1;
-	}
+	int index = 0;
 	vector<int> ElemPosVec;
-	int ElemPosInt = 0;
-	for (int y = 1; y < X + 1; ++y)
+	for (int Pos = 1; Pos < X+1; ++Pos)
 	{
-		for (vector<int>::iterator m = A.begin(); m != A.end(); ++m)
+		vector<int>::iterator itr = find(A.begin(), A.end(), Pos);
+		
+		if (itr != A.cend())
 		{
-			
-			if (*m == y)
-			{
-				ElemPosVec.push_back(ElemPosInt);
-				ElemPosInt = 0;
-				break;
-			}
-			ElemPosInt++;
+			index = distance(A.begin(), itr);
+			ElemPosVec.push_back(index);
+
+		}
+		else
+		{
+			return -1;
 		}
 	}
-
-	
 	
 	return *max_element(ElemPosVec.begin(), ElemPosVec.end());
 }
