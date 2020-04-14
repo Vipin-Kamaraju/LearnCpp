@@ -73,16 +73,17 @@ int solution(vector<int> &A, vector<int> &B)
 		{
 			if (A[m + 1] > A[m])
 			{
-				A[m] = A[m + 1];
-				B[m] = B[m + 1];
+				A.erase(A.begin() + m);
+				B.erase(B.begin() + m);
 			}
 			else
 			{
-				A[m+1] = A[m];
-				B[m+1] = B[m];
+				A.erase(A.begin() + m + 1);
+				B.erase(B.begin() + m + 1);
 			}
 			result--;
 			FishFight = true;
+			m = 0;
 		}
 	}
 
