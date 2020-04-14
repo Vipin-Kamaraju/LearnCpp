@@ -61,7 +61,7 @@ int solution(vector<int> &A, vector<int> &B)
 	int initVal = 0; // Value to check upstream or downstream
 	bool FishFight = false;
 	
-	for (int m = 0; (m < B.size()-1) || (FishFight) ; ++m)
+	for (int m = 0; m < B.size()-1 ; ++m)
 	{
 		if (FishFight)
 		{
