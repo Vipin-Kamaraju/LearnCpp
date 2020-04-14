@@ -87,9 +87,9 @@ int solution(vector<int> &A)
 
 		auto it = upper_bound(A_range.begin(), A_range.end(), make_pair(discEnd, zeroVal), checkRHS );
 
-		count = distance(A_range.begin(), it);
+		count = distance(A_range.begin(), it); // counting number of intersections at index i
 
-		count = count - (n + 1);
+		count = count - (n + 1); // Removing self intersections /  Removing repetetions
 		
 		discIntersections = discIntersections + count;
 	}
