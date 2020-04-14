@@ -51,12 +51,41 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <cassert>
 #include <string>
 
+typedef long long int l_int;
 
 using namespace std;
 
 int solution(vector<int> &A, vector<int> &B)
 {
-	int result = 0;
+	int result = A.size();
+	int initVal = 0; // Value to check upstream or downstream
+	bool FishFight = false;
+	
+	for (int m = 0; (m < B.size()-1) || (FishFight) ; ++m)
+	{
+		if (FishFight)
+		{
+			m = 0;
+			FishFight = false;
+		}
+		initVal = B[m];
+		if (B[m] - B[m+1] > 0)
+		{
+			if (A[m + 1] > A[m])
+			{
+				A[m] = A[m + 1];
+				B[m] = B[m + 1];
+			}
+			else
+			{
+				A[m+1] = A[m];
+				B[m+1] = B[m];
+			}
+			result--;
+			FishFight = true;
+		}
+	}
+
 	return result;
 }
 
@@ -67,6 +96,10 @@ void main()
 	printf("%ld\n", _MSC_VER);    // MSVC version VC++ 14.0
 	printf("%ld\n", _MSVC_LANG);  // shows unidentified due to Intellisense but Macro is defined.
 	
+	vector<int> A = { 4,3,2,1,5 };
+	vector<int> B = { 0,1,0,0,0 };
+
+	assert(solution(A, B) == 2);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
