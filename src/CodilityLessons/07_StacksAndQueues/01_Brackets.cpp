@@ -36,18 +36,81 @@ using namespace std;
 
 int solution(string &S)
 {
-	int result = 0;
 
-	return result;
+	// S.empty() == true
+	if (S.size() == 0)
+	{
+		return 1;
+	}
+	string filteredString; //contains only brackets
+	char lastElement = NULL;
+
+	for (auto it = S.begin(); it != S.end(); ++it)
+	{
+		if (*it == '{')
+		{
+			filteredString.push_back(*it);
+			lastElement = *it;
+		}
+		else if (*it == '[')
+		{
+			filteredString.push_back(*it);
+			lastElement = *it;
+		}
+		else if (*it == '(')
+		{
+			filteredString.push_back(*it);
+			lastElement = *it;
+		}
+
+		if (*it == '}' && lastElement == '{')
+		{
+			filteredString.pop_back();
+			if (filteredString.size() != 0)
+			{
+				lastElement = *(filteredString.end() - 1);
+			}
+		}
+		else if (*it == ']' && lastElement == '[')
+		{
+			filteredString.pop_back();
+			if (filteredString.size() != 0)
+			{
+				lastElement = *(filteredString.end() - 1);
+			}
+		}
+		else if (*it == ')' && lastElement == '(')
+		{
+			filteredString.pop_back();
+			if (filteredString.size() != 0)
+			{
+				lastElement = *(filteredString.end() - 1);
+			}
+		}
+
+	}
+
+	if (filteredString.size() == 0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void main()
 {
 	string S1 = "{[()()]}";
 	string S2 = "([)()]";
+	string S3 = "{[()()]}{[()()]}";
+	string S4 = "{[()(U)]}{[()()]}";
 
 	assert(solution(S1) == 1);
 	assert(solution(S2) == 0);
+	assert(solution(S3) == 1);
+	assert(solution(S3) == 1);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
