@@ -30,6 +30,7 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <algorithm>
 #include <map>
 #include <cassert>
+#include <string>
 
 
 using namespace std;
@@ -44,6 +45,9 @@ int solution(string &S)
 	}
 	string filteredString; //contains only brackets
 	char lastElement = NULL;
+	int count = 0;
+	int loopCounter = 0;
+	int loopCounter2 = 0;
 
 	for (auto it = S.begin(); it != S.end(); ++it)
 	{
@@ -51,19 +55,25 @@ int solution(string &S)
 		{
 			filteredString.push_back(*it);
 			lastElement = *it;
+			count++;
+			loopCounter2++;
 		}
 		else if (*it == '[')
 		{
 			filteredString.push_back(*it);
 			lastElement = *it;
+			count++;
+			loopCounter2++;
 		}
 		else if (*it == '(')
 		{
 			filteredString.push_back(*it);
 			lastElement = *it;
+			count++;
+			loopCounter2++;
 		}
 
-		if (*it == '}' && lastElement == '{')
+		if ((*it == '}') && (lastElement == '{'))
 		{
 			filteredString.pop_back();
 			if (filteredString.size() != 0)
@@ -74,8 +84,10 @@ int solution(string &S)
 			{
 				lastElement = NULL;
 			}
+			count--;
+			loopCounter2++;
 		}
-		else if (*it == ']' && lastElement == '[')
+		else if ((*it == ']') && (lastElement == '['))
 		{
 			filteredString.pop_back();
 			if (filteredString.size() != 0)
@@ -86,8 +98,10 @@ int solution(string &S)
 			{
 				lastElement = NULL;
 			}
+			count--;
+			loopCounter2++;
 		}
-		else if (*it == ')' && lastElement == '(')
+		else if ((*it == ')') && (lastElement == '('))
 		{
 			filteredString.pop_back();
 			if (filteredString.size() != 0)
@@ -98,11 +112,28 @@ int solution(string &S)
 			{
 				lastElement = NULL;
 			}
+			count--;
+			loopCounter2++;
+		}
+
+		loopCounter++;
+
+		if (loopCounter != loopCounter2)
+		{
+			cout << "loopCounter in loop: " << loopCounter << endl;
+			cout << "loopCounter2 in loop: " << loopCounter2 << endl;
+			cout << *it << endl;
 		}
 
 	}
 
-	if (filteredString.size() == 0)
+	cout << "loopCounter: " << loopCounter << endl;
+	cout << "loopCounter2: " << loopCounter2 << endl;
+	cout << "InputString size: " << S.size() << endl;
+	cout << "filteredString : " << filteredString << endl;
+	cout << "filteredString size: " << filteredString.size() << endl;
+
+	if ((filteredString.size() == 0) && (count == 0))
 	{
 		return 1;
 	}
@@ -111,9 +142,12 @@ int solution(string &S)
 		return 0;
 	}
 }
+}
 
 void main()
 {
+	printf("%ld\n", __cplusplus);
+
 	string S1 = "{[()()]}";
 	string S2 = "([)()]";
 	string S3 = "{[()()]}{[()()]}";
@@ -128,7 +162,7 @@ void main()
 	assert(solution(S4) == 1);
 	assert(solution(S5) == 0);
 	assert(solution(S6) == 0);
-	assert(solution(S6) == 0);
+	assert(solution(S7) == 0);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
