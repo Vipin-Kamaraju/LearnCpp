@@ -50,6 +50,7 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <map>
 #include <cassert>
 #include <string>
+#include <stack>
 
 typedef long long int l_int;
 
@@ -57,37 +58,45 @@ using namespace std;
 
 int solution(vector<int> &A, vector<int> &B)
 {
-	int result = A.size();
-	int initVal = 0; // Value to check upstream or downstream
-	bool FishFight = false;
+	/*
+	** Idea : the notation of upstream and downstream can be confusing
+	** lets say 0 is fish moving left
+	** 1 : fish is moving right
+	** If fish is moving left 2 cases are possible
+	**  - case 1: it is the first fish. Since its the first fish it will not be interrupted by other fish
+	**	- case 2: There is a fish moving right. The stack shall have a fish moving in opp direction.
+	** If the fish is moving right it will be added to the stack
+	**
+	** Can perform the same operation with vectors using the vector.back() function
+	*/
+	int result = 0;
 	
-	for (int m = 0; m < B.size()-1 ; ++m)
+	const int fishMovingLeft = 0;
+
+	stack<int> fishStack;
+	
+	for (int m = 0; m < B.size(); ++m)
 	{
-		if (FishFight)
+		// check if fish is moving left
+		if (fishMovingLeft == B[m])
 		{
-			m = 0;
-			FishFight = false;
+			while ((!fishStack.empty()) && (fishStack.top() < A[m]))
+			{
+				fishStack.pop();
+			}
+			if (fishStack.empty())
+			{
+				result++;  // These are the fishes that moved left and have no other fishes coming in opp direction
+			}
 		}
-		initVal = B[m];
-		if (B[m] - B[m+1] > 0)
+		// fish is moving right. It will be added to the stack
+		else
 		{
-			if (A[m + 1] > A[m])
-			{
-				A.erase(A.begin() + m);
-				B.erase(B.begin() + m);
-			}
-			else
-			{
-				A.erase(A.begin() + m + 1);
-				B.erase(B.begin() + m + 1);
-			}
-			result--;
-			FishFight = true;
-			m = 0;
+			fishStack.push(A[m]);
 		}
 	}
 
-	return result;
+	return result + fishStack.size();
 }
 
 void main()
@@ -100,7 +109,11 @@ void main()
 	vector<int> A = { 4,3,2,1,5 };
 	vector<int> B = { 0,1,0,0,0 };
 
+	vector<int> C = { 8,6,5,3,2,4,7 };
+	vector<int> D = { 1,1,1,1,1,0,0 };
+
 	assert(solution(A, B) == 2);
+	assert(solution(C, D) == 1);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
