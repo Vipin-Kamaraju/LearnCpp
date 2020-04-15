@@ -79,7 +79,14 @@ int solution(string &S)
 		}
 		else
 		{
-			charStack.pop();
+			if (charStack.empty())
+			{
+				return 0;
+			}
+			else
+			{
+				charStack.pop();
+			}
 		}
 	}
 
@@ -104,11 +111,13 @@ void main()
 	string B = "())";
 	string C = "";
 	string D = ")(((())())";
+	string E = "())(()";
 
 	assert(solution(A) == 1);
 	assert(solution(B) == 0);
 	assert(solution(C) == 1);
 	assert(solution(D) == 0);
+	assert(solution(E) == 0);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
