@@ -63,15 +63,6 @@ int solution(string &S)
 
 	for (auto it_S = S.begin() ;it_S != S.end(); ++it_S)
 	{
-		if (firstIteration)
-		{
-			if (*it_S == ')')
-			{
-				return 0;
-			}
-
-			firstIteration = false;
-		}
 
 		if (*it_S == '(')
 		{
