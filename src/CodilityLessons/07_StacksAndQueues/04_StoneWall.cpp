@@ -47,6 +47,7 @@ int solution(vector<int> &H)
 		return 0;
 	}
 
+	// stack of stones that can still have a possible matching stone
 	stack<int> stoneStack;
 	int result = 0;
 
@@ -58,6 +59,7 @@ int solution(vector<int> &H)
 		}
 		else
 		{
+			// Remove all stones that are greater than the current stone height
 			while ((!stoneStack.empty()) && H[m] < stoneStack.top())
 			{
 				stoneStack.pop();
