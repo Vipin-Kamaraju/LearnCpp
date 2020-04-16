@@ -28,7 +28,6 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
 #include <cassert>
 #include <string>
 #include <stack>
@@ -39,7 +38,46 @@ using namespace std;
 
 int solution(vector<int> &H)
 {
-	return 1;
+	/*
+	** Logic : if there are 2 stones with the same height with no smaller stones in between they can be made one stone
+	** Use a stack to push unmatched stones with greater height + to pop matched stones and stones with less height
+	*/
+	if (H.size() == 0)
+	{
+		return 0;
+	}
+
+	stack<int> stoneStack;
+	int result = 0;
+
+	for (int m = 0; m < H.size(); ++m)
+	{
+		if (stoneStack.empty())
+		{
+			stoneStack.push(H[m]);
+		}
+		else
+		{
+			while ((!stoneStack.empty()) && H[m] < stoneStack.top())
+			{
+				stoneStack.pop();
+			}
+
+			if (stoneStack.empty())
+			{
+				stoneStack.push(H[m]);
+			}
+			else if (H[m] > stoneStack.top())
+			{
+				stoneStack.push(H[m]);
+			}
+			else if (H[m] == stoneStack.top())
+			{
+				result++;
+			}
+		}
+	}
+	return (H.size() - result);
 }
 
 void main()
@@ -49,10 +87,20 @@ void main()
 	printf("%ld\n", _MSC_VER);    // MSVC version VC++ 14.0
 	printf("%ld\n", _MSVC_LANG);  // shows unidentified due to Intellisense but Macro is defined.
 
-	vector<int> A = {8,8,5,7,9,8,7,4,8};
+	vector<int> A = { 8,8,5,7,9,8,7,4,8 };
+	vector<int> B = { 8,8,8,8,8,8,8,8,8 };
+	vector<int> C = { 8 };
+	vector<int> D = {  };
+	vector<int> E = { 8,8,5,7,9,8,7,4,8,8 };
+	vector<int> F = { 8,8,5,7,9,8,7,7,4,8,8 };
 	
 
 	assert(solution(A) == 7);
+	assert(solution(B) == 1);
+	assert(solution(C) == 1);
+	assert(solution(D) == 0);
+	assert(solution(E) == 7);
+	assert(solution(F) == 7);
 
 
 	cout << "All tests passed" << endl;
