@@ -64,36 +64,52 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
-	int result = 1;
+	/*
+	** Logic : treat the array as 2 slices
+	** Getting the index of the max double slice is not important so we find the prefix sum of 
+	** all the slices from 2 directions. forward and reverse iterator.
+	** Ignore the 1st and last element in the calculation since they are not required
+	** find the max of 2 slices for every position of Y (Range 1 to N-1)
+	*/
+	int result = 0;
 
 	if (A.size() <= 3)
 	{
 		return 0;
 	}
+	int N = A.size();
 
-	vector<std::pair<int,int>> aTotal;
-	int sum = 0;
-	int maxTotal = 0;
-	int maxIndex = 0;
-	int minSumA = A[0];
-	int minIndexA = 0;
+	vector<int> maxValuesForward(N,0);
+	int maxValue_F = 0;
+	
+	int count_F = 0;
+	int count_R = 0;
 
-	for (int m = 0; m < A.size() ; ++m)
+	for (int it_F = 1; it_F < N-1; ++it_F)
 	{
-		sum = sum + A[m];
-		aTotal.push_back(std::pair<int, int>(sum, m));
-
-		if (sum > maxTotal)
-		{
-			maxTotal = sum;
-			maxIndex = m;
-		}
-		if ((sum < minSumA) && (m < A.size() - 2))
-		{
-			minSumA = sum;
-			minIndexA = m;
-		}
+		maxValue_F = std::max((maxValue_F + A[it_F]), 0);
+		maxValuesForward.at(it_F) = maxValue_F;
+		count_F++;
 	}
+
+
+	vector<int> maxValuesReverse(N,0);
+	int maxValue_R = 0;
+
+
+	for (int it_R = N -2; it_R > 0; --it_R)
+	{
+		maxValue_R = std::max((maxValue_R + A[it_R]), 0);
+		maxValuesReverse.at(it_R) = maxValue_R;
+		count_R++;
+	}
+
+
+	for (int m = 1; (m < A.size() - 1); ++m)
+	{
+		result = std::max((maxValuesForward[m-1] + maxValuesReverse[m+1]), result);
+	}
+
 
 	return result;
 }
@@ -113,20 +129,12 @@ void main()
 	vector<int> F = { 3,-3,3,-3,3,-3,3,-3,3 };
 
 	// first lets return the leader and check if we are getting the correct answer
-	assert(solution(A) > 0);
-	assert(solution(B) > 0);
-	assert(solution(C) > 0);
-	assert(solution(D) > 0);
-	assert(solution(E) > 0);
-	assert(solution(F) > 0);
-
-	//// first lets return the leader and check if we are getting the correct answer
-	//assert(solution(A) == 17);
-	//assert(solution(B) == 12);
-	//assert(solution(C) == 0);
-	//assert(solution(D) == 5);
-	//assert(solution(E) == 13);
-	//assert(solution(F) == 6);
+	assert(solution(A) == 17);
+	assert(solution(B) == 12);
+	assert(solution(C) == 0);
+	assert(solution(D) == 5);
+	assert(solution(E) == 13);
+	assert(solution(F) == 6);
 	
 	cout << "All tests passed" << endl;
 	system("PAUSE");
