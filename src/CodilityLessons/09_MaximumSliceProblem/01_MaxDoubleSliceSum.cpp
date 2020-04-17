@@ -71,58 +71,30 @@ int solution(vector<int> &A)
 		return 0;
 	}
 
-	vector<int> copyA(A.begin(), A.end());
-	//vector<int> copyA(A.begin()+1, A.end()-1);
-	vector<int> forwardSum;
-	vector<int> reverseSum;
-	vector<std::pair<int,int>> combinedSum;
+	vector<std::pair<int,int>> aTotal;
+	int sum = 0;
+	int maxTotal = 0;
+	int maxIndex = 0;
+	int minSumA = A[0];
+	int minIndexA = 0;
 
-	int sum_f = 0;
-	int sum_r = 0;
-	int sumAtIndex = 0;
-
-	auto it_R = copyA.rbegin(); // reverse iterator
-	bool firstIteration = true;
-
-	///////////////////////////////////////////
-	// Calculate max slice value
-	//////////////////////////////////////////
-
-	int max_ending = 0;
-	int max_slice = 0;
-	vector<int> maxSlice;
-
-	for (auto it_A = A.begin(); it_A != A.end(); ++it_A)
+	for (int m = 0; m < A.size() ; ++m)
 	{
-		max_ending = std::max(0, max_ending + *it_A);
-		max_slice = std::max(max_slice, max_ending);
-		maxSlice.push_back(max_slice);
-	}
+		sum = sum + A[m];
+		aTotal.push_back(std::pair<int, int>(sum, m));
 
-	//////////////////////////////////////////
-
-	for (auto it_F = copyA.begin(); (it_F != copyA.end()) && (it_R != copyA.rend()); ++it_F , ++it_R)
-	{
-		if (firstIteration)
+		if (sum > maxTotal)
 		{
-			*it_F = 0;
-			*it_R = 0;
-			firstIteration = false;
+			maxTotal = sum;
+			maxIndex = m;
 		}
-
-		sum_f = sum_f + *it_F;
-		sum_r = sum_r + *it_R;
-		forwardSum.push_back(sum_f);
-		reverseSum.push_back(sum_r);
+		if ((sum < minSumA) && (m < A.size() - 2))
+		{
+			minSumA = sum;
+			minIndexA = m;
+		}
 	}
 
-	int N = forwardSum.size() - 1;
-
-	for (int m = 0; m < forwardSum.size(); ++m)
-	{
-		sumAtIndex = forwardSum[m] + reverseSum[N -m];
-		combinedSum.push_back(std::pair<int,int>(sumAtIndex,m));
-	}
 	return result;
 }
 
