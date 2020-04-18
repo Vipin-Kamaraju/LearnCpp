@@ -97,20 +97,11 @@ int solution(vector<int> &A)
 	int possiblePeaks = sqrt((A_size - 2)) + 1;
 	unsigned int maxFlags = min(numPeaks, possiblePeaks);
 
-	cout << "maxFlags : " << maxFlags << endl;
-	cout << "numPeaks : " << numPeaks << endl;
-	cout << "possiblePeaks : " << possiblePeaks << endl;
-	cout << "A size : " << A.size() << endl;
-
-
-
 	vector<int> setFlags;
 
 	while (maxFlags != setFlags.size())
 	{
 		bool firstIteration = true;
-		cout << "maxFlags : " << maxFlags << endl;
-		cout << "setFlags.size() : " << setFlags.size() << endl;
 		for (unsigned int m = 0; m < peaks.size(); ++m)
 		{
 			if (firstIteration)
