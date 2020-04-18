@@ -79,7 +79,6 @@ using namespace std;
 int solution(vector<int> &A)
 {
 	int A_size = A.size();
-
 	if (A.size() == 0 || A.size() == 1)
 	{
 		return 0;
@@ -95,8 +94,14 @@ int solution(vector<int> &A)
 	}
 
 	int numPeaks = peaks.size();
-	int possiblePeaks = sqrt((A_size - 2));
+	int possiblePeaks = sqrt((A_size - 2)) + 1;
 	unsigned int maxFlags = min(numPeaks, possiblePeaks);
+
+	cout << "maxFlags : " << maxFlags << endl;
+	cout << "numPeaks : " << numPeaks << endl;
+	cout << "possiblePeaks : " << possiblePeaks << endl;
+	cout << "A size : " << A.size() << endl;
+
 
 
 	vector<int> setFlags;
@@ -104,6 +109,8 @@ int solution(vector<int> &A)
 	while (maxFlags != setFlags.size())
 	{
 		bool firstIteration = true;
+		cout << "maxFlags : " << maxFlags << endl;
+		cout << "setFlags.size() : " << setFlags.size() << endl;
 		for (unsigned int m = 0; m < peaks.size(); ++m)
 		{
 			if (firstIteration)
@@ -113,17 +120,23 @@ int solution(vector<int> &A)
 			}
 			else
 			{
-				if (peaks[m] - setFlags.back() >= maxFlags)
+				if ((peaks[m] - setFlags.back()) >= maxFlags)
 				{
 					setFlags.push_back(peaks[m]);
 				}
 			}
 		}
 
-		if (maxFlags != setFlags.size())
+		if (maxFlags > setFlags.size())
 		{
+			cout << "maxFlags after loop : " << maxFlags << endl;
+			cout << "setFlags.size() after loop : " << setFlags.size() << endl;
 			maxFlags--;
 			setFlags.erase(setFlags.begin(), setFlags.end());
+		}
+		else if (maxFlags < setFlags.size())
+		{
+			return maxFlags;
 		}
 	}
 
