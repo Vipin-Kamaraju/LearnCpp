@@ -78,6 +78,17 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
+	/*
+	** Logic : step1 : find all the peaks that are possible. the first and the last element can be eleminated
+	** since they do not have the possibility of a peak
+	** step 2: The max Flags that you can set is depending on two factors
+	** 1: Number of peaks
+	** 2: Size of the array (N flags => size must be min of N*N). Counting also the first element leads to N+1 possible flags in few cases
+	**
+	** step 3: Find when the setFlags are equal to the maxFlags
+	** contradiction is sometimes they cannot be equal and setFlags become greater than maxFlags in this case
+	** setFlags can never be greater than the maxFlags
+	*/
 	int A_size = A.size();
 	if (A.size() == 0 || A.size() == 1)
 	{
