@@ -92,6 +92,11 @@ int solution(vector<int> &A)
 	*/
 	int result = 0;
 
+	if (A.size() == 0 || A.size() == 1)
+	{
+		return 0;
+	}
+
 	vector<int> peaks;
 
 	for (int m = 1; m < A.size() - 1; ++m)
@@ -102,19 +107,25 @@ int solution(vector<int> &A)
 		}
 	}
 
-	int numBlocks1 = (A.size() / peaks.size());
 	vector<int> differencePeaks;
 	int difference = 0;
-	bool peakFound = false;
 
-	if (!peaks.empty())
+	if (peaks.size() == 0)
+	{
+		return 0;
+	}
+	else if (peaks.size() == 1)
+	{
+		return 1;
+	}
+	else if (peaks.size() > 1)
 	{
 		difference = peaks[0];
 		differencePeaks.push_back(difference);
 	}
 	
 
-	/*for (int n = 1; n < peaks.size(); ++n)
+	for (int n = 1; n < peaks.size(); ++n)
 	{
 		difference = peaks[n] - peaks[n-1];
 		differencePeaks.push_back(difference);
@@ -125,34 +136,25 @@ int solution(vector<int> &A)
 			differencePeaks.push_back(difference);
 		}
 	}
-*/
-	int maxDistance = peaks[0];
-	int count = 0;
 
-	for (int m = 1; m < A.size() - 1; ++m)
+	vector<double> maxDistances;
+	double maxDistance;
+
+	for (int t = 0; t < differencePeaks.size()-1; ++t)
 	{
-		if ((A[m] > A[m - 1]) && (A[m] > A[m + 1]))
-		{
-			peakFound = true;
-		}
-		count++;
-		if (count > maxDistance)
-		{
-			count = 0;
-			if (peakFound)
-			{
-				// do nothing
-			}
-			else
-			{
-				maxDistance++;
-				m = 0;
-			}
-			
-		}
+		maxDistance = (differencePeaks[t] + differencePeaks[t + 1]) / (2.0);
+		maxDistances.push_back(maxDistance);
 	}
 
-	result = A.size() / (maxDistance +1);
+	sort(maxDistances.begin(), maxDistances.end());
+	maxDistance = maxDistances.back();
+
+	if (maxDistance > (int)maxDistance)
+	{
+		maxDistance++;
+	}
+
+	result = A.size() / (int)maxDistance;
 
 	return result;
 }
@@ -166,10 +168,14 @@ void main()
 
 	vector<int> A = { 1,2,3,4,3,4,1,2,3,4,6,2 };
 	vector<int> B = {0, 1, 0, 0, 1, 0, 0, 1, 0};
+	vector<int> C = {};
+	vector<int> D = {4};
 
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A) == 3);
 	assert(solution(B) == 3);
+	assert(solution(C) == 0);
+	assert(solution(D) == 0);
 
 	
 	cout << "All tests passed" << endl;
