@@ -70,7 +70,7 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [1..100,000];
 each element of array A is an integer within the range [0..1,000,000,000].
 
-Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
+Copyright 2009â€“2020 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
 
 */
 
@@ -94,6 +94,7 @@ int solution(vector<int> &A)
 	** step 3: Iterate through the vector of divisors and find the least block size with atleast one peak
 	** step 4: least block size => maximum number of blocks
 	** number of blocks = A.size()/least block size
+	** This soln has a time complexity of O(N * log(log(N))) 
 	*/
 	int result = 0;
 
