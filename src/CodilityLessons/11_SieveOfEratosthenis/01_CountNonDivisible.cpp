@@ -57,7 +57,24 @@ using namespace std;
 
 vector<int> solution(vector<int> &A)
 {
-	vector<int> result;
+	/*
+	** Logic : Solution with O(N^2) time complexity
+	*/
+	int A_size = A.size();
+	vector<int> result(A_size, 0);
+
+	for (int m = 0; m < A.size(); ++m)
+	{
+		int count = 0;
+		for (int n = 0; n < A.size(); ++n)
+		{
+			if ((A[m] % A[n]) != 0)
+			{
+				count++;
+			}
+		}
+		result.at(m) = count;
+	}
 
 	return result;
 }
