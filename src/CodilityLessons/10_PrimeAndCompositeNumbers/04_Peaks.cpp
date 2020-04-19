@@ -87,11 +87,13 @@ using namespace std;
 int solution(vector<int> &A)
 {
 	/*
-	** Logic : step 1: find the possible peaks
-	** step 2: find the minimum between 2 peaks
-	** if A size is a prime number return 0 or return 1
-	** since it cannot be split into 2 equal blocks
-	** A.size() =  m*n where m , n are divisors of A.size()
+	** Logic :
+	** step 1: find the divisors of A.size()
+	** since A can be split into equal blocks of size n if and only if n is a divisor of A.size()
+	** step 2: find the peaks and sort them
+	** step 3: Iterate through the vector of divisors and find the least block size with atleast one peak
+	** step 4: least block size => maximum number of blocks
+	** number of blocks = A.size()/least block size
 	*/
 	int result = 0;
 
