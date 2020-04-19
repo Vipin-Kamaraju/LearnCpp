@@ -89,6 +89,9 @@ int solution(vector<int> &A)
 	/*
 	** Logic : step 1: find the possible peaks
 	** step 2: find the minimum between 2 peaks
+	** if A size is a prime number return 0 or return 1
+	** since it cannot be split into 2 equal blocks
+	** A.size() =  m*n where m , n are divisors of A.size()
 	*/
 	int result = 0;
 
@@ -96,6 +99,28 @@ int solution(vector<int> &A)
 	{
 		return 0;
 	}
+
+	vector<int> vecDivisors;
+	int divisor = 0;
+	int divisor2 = 0;
+	int A_size = A.size();
+
+	int maxDivisors = sqrt(A_size);
+
+	for (int divisor = 1; divisor <= maxDivisors; ++divisor)
+	{
+		if (A_size % divisor == 0)
+		{
+			divisor2 = A_size / divisor;
+			vecDivisors.push_back(divisor);
+			if (divisor != divisor2)
+			{
+				vecDivisors.push_back(divisor2);
+			}	
+		}
+	}
+
+	sort(vecDivisors.begin(), vecDivisors.end());
 
 	vector<int> peaks;
 
@@ -107,9 +132,6 @@ int solution(vector<int> &A)
 		}
 	}
 
-	vector<int> differencePeaks;
-	int difference = 0;
-
 	if (peaks.size() == 0)
 	{
 		return 0;
@@ -118,43 +140,54 @@ int solution(vector<int> &A)
 	{
 		return 1;
 	}
-	else if (peaks.size() > 1)
-	{
-		difference = peaks[0];
-		differencePeaks.push_back(difference);
-	}
-	
 
-	for (int n = 1; n < peaks.size(); ++n)
-	{
-		difference = peaks[n] - peaks[n-1];
-		differencePeaks.push_back(difference);
+	vector<int> vecResult;
 
-		if (n == (peaks.size() - 1))
+	for (int n = 0; n < vecDivisors.size(); ++n)
+	{
+		int count = 0;
+		bool peakFound = false;
+		int maxDistance = vecDivisors[n];
+		int peakCounter = 0;
+		if (maxDistance > 1)
 		{
-			difference = A.size()-1 - peaks[n];
-			differencePeaks.push_back(difference);
+			for (int r = 0; r < A.size(); ++r)
+			{
+				count++;
+				if (peakCounter < peaks.size())
+				{
+					if (r == peaks[peakCounter])
+					{
+						peakFound = true;
+						peakCounter++;
+
+					}
+				}
+				
+				if (count == maxDistance)
+				{
+					count = 0;
+					if (!peakFound)
+					{
+						break;
+					}
+					else
+					{
+						peakFound = false;
+					}
+				}
+				if ((r == A_size - 1))
+				{
+					vecResult.push_back(maxDistance);
+				}
+				
+			}
 		}
+		
 	}
 
-	vector<double> maxDistances;
-	double maxDistance;
-
-	for (int t = 0; t < differencePeaks.size()-1; ++t)
-	{
-		maxDistance = (differencePeaks[t] + differencePeaks[t + 1]) / (2.0);
-		maxDistances.push_back(maxDistance);
-	}
-
-	sort(maxDistances.begin(), maxDistances.end());
-	maxDistance = maxDistances.back();
-
-	if (maxDistance > (int)maxDistance)
-	{
-		maxDistance++;
-	}
-
-	result = A.size() / (int)maxDistance;
+	result = vecResult.front();
+	result = A_size / result;
 
 	return result;
 }
@@ -170,12 +203,18 @@ void main()
 	vector<int> B = {0, 1, 0, 0, 1, 0, 0, 1, 0};
 	vector<int> C = {};
 	vector<int> D = {4};
+	vector<int> E = { 0,1,0,1,0,1,0,1,0,1,0 };
+	vector<int> F = { 5,6,5,6,1,1,1,1,6,5,6,5 };
+	vector<int> G = { 1,6,1,1,1,1,1,6,1,1,1,1,1,1,1,1,6,1,1,1,1,1,6,1 };
 
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A) == 3);
 	assert(solution(B) == 3);
 	assert(solution(C) == 0);
 	assert(solution(D) == 0);
+	assert(solution(E) == 1);
+	assert(solution(F) == 4);
+	assert(solution(G) == 4);
 
 	
 	cout << "All tests passed" << endl;
