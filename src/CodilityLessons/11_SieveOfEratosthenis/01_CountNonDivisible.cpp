@@ -52,30 +52,45 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <string>
 #include <stack>
 #include <cmath>
+#include <map>
 
 using namespace std;
 
 vector<int> solution(vector<int> &A)
 {
+	
 	/*
-	** Logic : Solution with O(N^2) time complexity
+	** Logic: Use the Eratosthenes method by calculating the divisors
+	** step1 : create a map of unique elements and repetetions of their occurences
+	** step2 : create a vector Divisor count for keeping track of the divisors
+	** step3 : According to the task. For size N, max value of array A is 2*N
+	** i.e Eg. 5 elements can have a max value of 10
 	*/
 	int A_size = A.size();
+	map<int, int> divisors;
 	vector<int> result(A_size, 0);
 
-	for (int m = 0; m < A.size(); ++m)
+	for (auto it_A = A.begin(); it_A != A.end(); ++it_A)
 	{
-		int count = 0;
-		for (int n = 0; n < A.size(); ++n)
-		{
-			if ((A[m] % A[n]) != 0)
-			{
-				count++;
-			}
-		}
-		result.at(m) = count;
+		divisors[*it_A]++;
 	}
 
+	// step 3. Since 5 elements can have max value 10
+	// +1 added to size to avoid confusion of zero index in calculation
+	vector<int> nonDivisibleCounter(2 * A_size + 1, A_size);
+
+	for (auto it_d = divisors.begin(); it_d != divisors.end(); ++it_d)
+	{
+		for (int m = 1; m*it_d->first <= nonDivisibleCounter.size() - 1; ++m)
+		{
+			nonDivisibleCounter[m * (it_d->first)] = nonDivisibleCounter[m * (it_d->first)] - it_d->second;
+		}
+	}
+
+	for (int n = 0; n < A.size();++n)
+	{
+		result[n] = nonDivisibleCounter[A[n]];
+	}
 	return result;
 }
 
@@ -89,11 +104,25 @@ void main()
 	vector<int> A = { 3,1,2,3,6 };
 	vector<int> resultA = { 2,4,3,2,0 };
 
+	vector<int> B = { 1,2,5,10,12,8,4,3 };
+	vector<int> resultB = { 7,6,6,4,3,4,5,6 };
+
+	vector<int> C = {3,5,11,6,1,5,2};
+	vector<int> resultC = { 5,4,5,3,6,4,5 };
+
+	vector<int> D = {5,5,5,5,5,5,5};
+	vector<int> resultD = {0,0,0,0,0,0,0};
+
+	vector<int> E = {};
+	vector<int> resultE = {};
+
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A) == resultA);
+	assert(solution(B) == resultB);
+	assert(solution(C) == resultC);
+	assert(solution(D) == resultD);
+	assert(solution(E) == resultE);
 
-
-	
 	cout << "All tests passed" << endl;
 	system("PAUSE");
 }
