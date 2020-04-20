@@ -39,46 +39,24 @@ using namespace std;
 
 int solution(int N, int M)
 {
-	int multiplier = 0;
+	int counter = 0;
 	if (N == 1 || N == M)
 	{
 		return 1;
 	}
 
-	
-	if (N > M)
-	{
-		multiplier = M;
-	}
-	else
-	{
-		multiplier = (M % N);
-		M = multiplier;
-	}
+	// Reason for error found is here
+	// Huge vector allocations can take up a lot of time
+	// vector of size 1e9 caused the segmentation fault and returned a bad allocation error
+	vector<int> vecN(N,0);
 
-	vector<int> vecN(N, 1);
-	bool chocNotEaten = true;
-	vecN[0] = 0;
-	int counter = 1;
+	int pos = 0;
 
-	while (chocNotEaten)
+	while (vecN[pos] != 1)
 	{
-		if (multiplier >= N)
-		{
-			multiplier = multiplier - N;
-		}
-		if (vecN[multiplier] == 0)
-		{
-			// choclate already eaten
-			chocNotEaten = false;
-		}
-		else
-		{
-			vecN[multiplier] = 0;
-			counter++;
-			multiplier = multiplier + M;
-		}
-
+		vecN[pos] = 1;
+		counter++;
+		pos = (pos + M) % N;
 	}
 
 	return counter;
@@ -99,9 +77,14 @@ void main()
 	int D = 21;
 	int result_CD = 4;
 
+	int E = 1000000000;
+	int F = 1;
+
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A,B) == result_AB);	
 	assert(solution(C,D) == result_CD);
+
+	solution(E,F);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
