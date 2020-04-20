@@ -54,9 +54,50 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 
 using namespace std;
 
-vector<int> solution(vector<int> &A)
+vector<int> solution(int N, vector<int> &P, vector<int> &Q)
 {
+	/*
+	** Logic : use the modified verison Eratosthenes method
+	** Refer to the reading material provided for this chapter on Factorization
+	** step1 : create a sort of LUT of factors using the Eratosthenes method
+	** 
+	*/
 	vector<int> result;
+
+	// factorization.LUT
+	vector<int> factors(N+1, 0);
+	int k;
+	for (int i = 2; i*i < N; ++i)
+	{
+		if (factors[i] == 0)
+		{
+			k = i*i;
+		}
+		while (k <= N)
+		{
+			if (factors[k] == 0)
+			{
+				factors[k] = i;
+			}
+			k = k + i;
+		}
+	}
+
+	map<int, int> primeFactors(N+1,0);
+	int factor2 = 4;
+
+	// prime factors calculation
+	for (int n = 2; n <= N; ++n)
+	{
+		if (factors[n] > 0)
+		{
+			factor2 = (n / factors[n]);
+		}
+		if (factors[factor2] == 0)
+		{
+			primeFactors[n] = 1;
+		}
+	}
 
 	return result;
 }
