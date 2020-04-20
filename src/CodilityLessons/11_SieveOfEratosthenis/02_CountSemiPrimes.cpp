@@ -61,6 +61,9 @@ vector<int> solution(int N, vector<int>& P, vector<int>& Q)
 	** Refer to the reading material provided for this chapter on Factorization
 	** step1 : create a sort of LUT of factors using the Eratosthenes method
 	** 
+	** Optimization step the final check can be made faster by using prefix-sums
+	** have the count of number of prime factors at each position
+	** 
 	*/
 	vector<int> result;
 
@@ -72,7 +75,7 @@ vector<int> solution(int N, vector<int>& P, vector<int>& Q)
 		factors[1] = 1;
 	}
 	int k;
-	for (int i = 2; i*i < N; ++i)
+	for (int i = 2; i*i < N+1; ++i)
 	{
 		if (factors[i] == 0)
 		{
@@ -112,21 +115,24 @@ vector<int> solution(int N, vector<int>& P, vector<int>& Q)
 
 	}
 
+	int factorsSum = 0;
+	//prefix-sum of primeFactors
+	for (int position = 0; position < primeFactors.size(); ++position)
+	{
+		if (primeFactors[position] == 1)
+		{
+			factorsSum++;
+		}
+		primeFactors[position] = factorsSum;
+	}
+
 	// iterate over P & Q
 	for (int j = 0; j < P.size(); ++j)
 	{
-		int lowerLimit = P[j];
+		int lowerLimit = P[j]-1;
 		int upperLimit = Q[j];
-		int counterFactors = 0;
-
-		for (int k = lowerLimit; k <= upperLimit; ++k)
-		{
-			if (primeFactors[k] == 1)
-			{
-				counterFactors++;
-			}
-		}
-		result.push_back(counterFactors);
+		
+		result.push_back((primeFactors[upperLimit]-primeFactors[lowerLimit]));
 	}
 
 	return result;
@@ -142,12 +148,17 @@ void main()
 	int N = 26;
 	vector<int> A = { 1,4,16 };
 	vector<int> B = { 26,10,20 };
-	vector<int> result = { 10,4,0};
+	vector<int> result = { 10,4,0 };
 
+	int M = 4;
+	vector<int> C = { 1, 2, 3, 4, 1, 2, 3, 1, 2, 1 };
+	vector<int> D = { 4, 4, 4, 4, 3, 3, 3, 2, 2, 1 };
+	vector<int> resultCD = { 1,1,1,1,0,0,0,0,0,0 };
 	
 
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(N,A,B) == result);
+	assert(solution(M, C, D) == resultCD);
 	
 
 	cout << "All tests passed" << endl;
