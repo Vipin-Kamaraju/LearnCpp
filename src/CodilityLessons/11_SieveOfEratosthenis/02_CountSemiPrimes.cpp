@@ -54,7 +54,7 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 
 using namespace std;
 
-vector<int> solution(int N, vector<int> &P, vector<int> &Q)
+vector<int> solution(int N, vector<int>& P, vector<int>& Q)
 {
 	/*
 	** Logic : use the modified verison Eratosthenes method
@@ -64,8 +64,13 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q)
 	*/
 	vector<int> result;
 
-	// factorization.LUT
+	// factorization LUT
 	vector<int> factors(N+1, 0);
+	if (factors.size() >= 2)
+	{
+		factors[0] = 1;
+		factors[1] = 1;
+	}
 	int k;
 	for (int i = 2; i*i < N; ++i)
 	{
@@ -83,7 +88,14 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q)
 		}
 	}
 
-	map<int, int> primeFactors(N+1,0);
+	if (factors.size() >= 2)
+	{
+		factors[0] = 1;
+		factors[1] = 1;
+	}
+
+	//map<int, int> primeFactors(N+1,0);
+	vector<int> primeFactors(N + 1, 0);
 	int factor2 = 4;
 
 	// prime factors calculation
@@ -92,11 +104,29 @@ vector<int> solution(int N, vector<int> &P, vector<int> &Q)
 		if (factors[n] > 0)
 		{
 			factor2 = (n / factors[n]);
+			if (factors[factor2] == 0)
+			{
+				primeFactors[n] = 1;
+			}
 		}
-		if (factors[factor2] == 0)
+
+	}
+
+	// iterate over P & Q
+	for (int j = 0; j < P.size(); ++j)
+	{
+		int lowerLimit = P[j];
+		int upperLimit = Q[j];
+		int counterFactors = 0;
+
+		for (int k = lowerLimit; k <= upperLimit; ++k)
 		{
-			primeFactors[n] = 1;
+			if (primeFactors[k] == 1)
+			{
+				counterFactors++;
+			}
 		}
+		result.push_back(counterFactors);
 	}
 
 	return result;
