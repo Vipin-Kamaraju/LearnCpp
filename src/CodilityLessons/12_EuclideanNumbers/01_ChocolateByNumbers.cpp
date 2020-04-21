@@ -35,31 +35,41 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <algorithm>
 #include <cassert>
 
+typedef long long int l_int;
+
 using namespace std;
+
+l_int GCD(l_int N, l_int M)
+{
+	if (N % M == 0)
+	{
+		return M;
+	}
+	else
+	{
+		return GCD(M, (N%M));
+	}
+
+}
+
+l_int LCM(l_int N, l_int M)
+{
+	l_int gcd = GCD(N,M);
+
+	return ((N*M) / gcd);
+}
 
 int solution(int N, int M)
 {
-	int counter = 0;
-	if (N == 1 || N == M)
-	{
-		return 1;
-	}
-
-	// Reason for error found is here
-	// Huge vector allocations can take up a lot of time
-	// vector of size 1e9 caused the segmentation fault and returned a bad allocation error
-	vector<int> vecN(N,0);
-
-	int pos = 0;
-
-	while (vecN[pos] != 1)
-	{
-		vecN[pos] = 1;
-		counter++;
-		pos = (pos + M) % N;
-	}
-
-	return counter;
+	/*
+	** 2 solutions possible. The first solution was 100% correctnes but crashes due to large vector size
+	** 
+	** Logic : The answer to this problem  =  LCM(a,b)/M;
+	** Also, LCM = a.b/gcd(a,b); refer to reading material
+	** GCD(a,b) = GCD(b, a%b)
+	*/
+	
+	return (LCM(N,M)/M);
 }
 
 void main()
@@ -84,7 +94,7 @@ void main()
 	assert(solution(A,B) == result_AB);	
 	assert(solution(C,D) == result_CD);
 
-	solution(E,F);
+	assert(solution(E,F) == 1e9);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
