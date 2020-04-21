@@ -73,7 +73,11 @@ int solution(vector<int> &A, vector<int> &B)
 	** step2: find GCD of A,B
 	** step3: find int N = LCM/GCD
 	** step4: check if A%N==0 and B%N==0 => prime divisors are same
+
+	** Found the error : This solution fails for TC.(2,8) as input
 	*/
+
+	vector<std::pair<int, int>> vecResult;
 	for (int m = 0; m < A.size(); ++m)
 	{
 		//step1+step2
@@ -85,6 +89,7 @@ int solution(vector<int> &A, vector<int> &B)
 		if ((A[m] % N == 0) && (B[m] % N == 0))
 		{
 			result++;
+			vecResult.push_back(std::pair<int, int>(A[m], B[m]));
 		}
 	}
 	
@@ -102,8 +107,14 @@ void main()
 	vector<int> B = { 75,30,5,18,14,34 };
 	int result_AB = 2;
 
+	vector<int> C = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+	vector<int> D = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	int result_CD = 18; // solution gives 16 fails for (2,8) & (8,2)
+
+
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A,B) == result_AB);	
+	assert(solution(C,D) == result_CD);
 	
 	cout << "All tests passed" << endl;
 	system("PAUSE");
