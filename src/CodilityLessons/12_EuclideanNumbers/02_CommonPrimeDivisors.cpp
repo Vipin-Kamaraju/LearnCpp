@@ -68,28 +68,38 @@ int solution(vector<int> &A, vector<int> &B)
 {
 	int result = 0;
 	/*
-	** Logic: found logic from test cases
-	** step1: find LCM of A,B
-	** step2: find GCD of A,B
-	** step3: find int N = LCM/GCD
-	** step4: check if A%N==0 and B%N==0 => prime divisors are same
-
-	** Found the error : This solution fails for TC.(2,8) as input
+	** Logic: Changed logic
+	** Reference: https://www.martinkysel.com/codility-commonprimedivisors-solution/ 
 	*/
 
-	vector<std::pair<int, int>> vecResult;
 	for (int m = 0; m < A.size(); ++m)
 	{
-		//step1+step2
-		std::pair<l_int, l_int> lcm_gcd = LCM(A[m], B[m]);
 
-		//step 3
-		l_int N = lcm_gcd.first / lcm_gcd.second;
+		l_int gcd = GCD(A[m], B[m]);
 
-		if ((A[m] % N == 0) && (B[m] % N == 0))
+		while (A[m] != 1)
+		{
+			l_int gcd_A = GCD(gcd, A[m]);
+			if (gcd_A == 1)
+			{
+				break;
+			}
+			A[m] = A[m] / gcd_A;
+		}
+
+		while (B[m] != 1)
+		{
+			l_int gcd_B = GCD(gcd, B[m]);
+			if (gcd_B == 1)
+			{
+				break;
+			}
+			B[m] = B[m] / gcd_B;
+		}
+
+		if (A[m] == 1 && B[m] == 1)
 		{
 			result++;
-			vecResult.push_back(std::pair<int, int>(A[m], B[m]));
 		}
 	}
 	
