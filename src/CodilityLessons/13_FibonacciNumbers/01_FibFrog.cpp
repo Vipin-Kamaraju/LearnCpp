@@ -98,8 +98,15 @@ vector<int> generateFibonacciSeries(int N)
 
 int solution(vector<int> &A) 
 {
+	/*
+	** This current solution has an error. It gets stuck in the while loop
+	** Adding locations variable to check if the frog has already reached a certain position in the current cycle
+	** Refer : https://github.com/markhary/codility/blob/master/src/FibFrog.cpp solution
+	*/
 	int minimumJumps = std::numeric_limits<int>::max();
 	const int A_size = A.size();
+
+	vector<bool> locations(A_size, false);
 
 	//step1 : generate fibonacci series with the maximum jump as N+1;
 	vector<int> fibonacci = generateFibonacciSeries(A_size);
@@ -115,6 +122,18 @@ int solution(vector<int> &A)
 		PathTracker currentPath = paths.back();
 		paths.pop_back();
 
+		// check 
+		if (currentPath.location >= 0)
+		{
+			locations[currentPath.location] = false;
+		}
+
+		// check if this path is already higher
+		if (currentPath.jump + 1 > minimumJumps)
+		{
+			continue;
+		}
+
 		// iterate over the fibonacci series
 		for (int i = 2; i < fibonacci.size(); ++i)
 		{
@@ -126,7 +145,12 @@ int solution(vector<int> &A)
 			if ((currentVal < A_size) && (A[currentVal]))
 			{
 				// frog has jumped to a new position
+				if (locations[currentVal])
+				{
+					continue;
+				}
 				paths.push_back(PathTracker(currentVal, currentPath.jump + 1));
+				locations[currentVal] = true;
 			}
 			else if (currentVal == A_size)
 			{
