@@ -64,22 +64,33 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <algorithm>
 #include <cassert>
 #include <stack>
+#include <list>
+#include <limits>
 
 typedef unsigned long long int l_int;
 
 using namespace std;
 
+struct PathTracker
+{
+	int location;
+	int jump;
+	PathTracker(int l, int j) : location(l), jump(j)
+	{}
+
+};
+
 vector<int> generateFibonacciSeries(int N)
 {
 	vector<int> fibonacci;
-	
+
 	fibonacci.push_back(0);
 	fibonacci.push_back(1);
 	int value = 0;
 
 	for (int i = 2;value <= N + 1; ++i)
 	{
-		value = fibonacci[i - 1] + fibonacci[i - 2];	
+		value = fibonacci[i - 1] + fibonacci[i - 2];
 		fibonacci.push_back(value);
 	}
 
@@ -88,121 +99,32 @@ vector<int> generateFibonacciSeries(int N)
 	return fibonacci;
 }
 
-vector<int> generatePossibleJumps(vector<int>& A)
+int solution(vector<int> &A) 
 {
-	vector<int> Jumps;
-	int count = 1;
-	int value = 0;
-	vector<vector<int>> vecJumps;
-	bool firstIteration = true;
-	vector<int> result;
+	int minimumJumps = std::numeric_limits<int>::max();
+	const int A_size = A.size();
 
-	for (int i = 0; i < A.size(); ++i)
+	//step1 : generate fibonacci series with the maximum jump as N+1;
+	vector<int> fibonacci = generateFibonacciSeries(A_size);
+
+	// step2 : initialize the current location and jumps of the frog as -1,0
+	std::list<PathTracker> paths;
+	PathTracker currentPath(-1,0);
+	paths.push_back(currentPath);
+
+	// step3 :  Iterate over the array to find the min number of jumps required
+	while (!paths.empty())
 	{
-		if (A[i] == 0)
-		{
-			count++;
-		}
-		else
-		{
-			if (firstIteration)
-			{
-				result.push_back(count);
-				Jumps.push_back(count);
-				count = 1;
-				vecJumps.push_back(Jumps);
-				Jumps.erase(Jumps.begin(), Jumps.end());
-				firstIteration = false;
-			}
-			else
-			{
-				result.push_back(count);
-				Jumps.push_back(count);
-				int Jumps_size = Jumps.size();
-				int vecJumps_size = vecJumps.size();
-				int j = vecJumps_size - 1;
-
-				int vecJumps_size2 = vecJumps[j].size();
-				for (int k = 0; k < vecJumps_size2; ++k)
-				{
-					value = vecJumps[j][k] + count;
-					Jumps.push_back(value);
-					result.push_back(value);
-				}
-
-				vecJumps.push_back(Jumps);
-				Jumps.erase(Jumps.begin(), Jumps.end());
-				count = 1;
-			}
-		}
+		// check possible paths here
 	}
 
-	return result;
-}
-
-vector<int> JumpCombinations(vector<int>& fibonacciSeries, int desiredValue) 
-{
-	int remainingValue = desiredValue;
-	vector<stack<int>> Combinations;
-	stack<int> Pairs;
-
-	for (auto it_F = fibonacciSeries.rbegin(); it_F != fibonacciSeries.rend(); ++it_F)
+	// step4 : If the paths is empty then no possible jump exists => return -1
+	if (minimumJumps == std::numeric_limits<int>::max())
 	{
-		int currentVal = *it_F;
-		for (auto it_F2 = it_F; it_F2 != fibonacciSeries.rend(); )
-		{
-			Pairs.push(*it_F2);
-			remainingValue = remainingValue - *it_F2;
-			if (remainingValue < 0)
-			{
-				remainingValue = remainingValue + *it_F2;
-				Pairs.pop();
-				it_F2++;
-			}
-			else if (remainingValue == 0)
-			{
-				Combinations.push_back(Pairs);
-				while (!Pairs.empty())
-				{
-					Pairs.pop();
-				}
-				it_F2 = fibonacciSeries.rend();
-				remainingValue = desiredValue;
-			}
-		}
+		return -1;
 	}
-	vector<int> result; // TODO: Used just for successful compilation. needs to be removed
-	return result;
-}
 
-int solution(vector<int> &A)
-{
-	/*
-	** Logic:
-	** step1 : generate a fibonacci series
-	** step2 : generate possible jumps from array A (Probably not necessary in the future)
-	** step3 : find the jumpCombinations from fibonacci series
-	** step4 : find the minimum jumps that are required
-	*/
-	int result = 0;
-	int A_size = A.size();
-	
-	// step1
-	vector<int> fibonacciSeries = generateFibonacciSeries(A_size);
-
-	// step2
-	vector<int> possibleJumps = generatePossibleJumps(A);
-
-	// possible jump combinations from fibonacci series which add up to (A_size + 1)
-	// There are only very few pairs that can add up to the combination of fibonacci numbers. (Refer : reading material exercise part)
-	// We shall consider all these pairs
-	// this is a very common problem on the internet called the Coin changing problem and a lot of solutions are available
-	// http://jaqm.ro/issues/volume-5,issue-2/pdfs/patterson_harmel.pdf
-	// http://rosettacode.org/wiki/Count_the_coins
-	vector<int> result2 = JumpCombinations(fibonacciSeries, (A_size + 1));
-	// TODO: result 2 only for successful compilation. Needs to be removed and replaced with a meaningful name
-
-	return result;
+	return minimumJumps;
 }
 
 void main()
