@@ -60,12 +60,12 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 */
 
 #include <iostream>
-#include <vector>
 #include <algorithm>
 #include <cassert>
 #include <stack>
 #include <list>
 #include <limits>
+#include <vector>
 
 typedef unsigned long long int l_int;
 
@@ -80,10 +80,8 @@ struct PathTracker
 
 };
 
-vector<int> generateFibonacciSeries(int N)
+void generateFibonacciSeries(int N, vector<int>& fibonacci)
 {
-	vector<int> fibonacci;
-
 	fibonacci.push_back(0);
 	fibonacci.push_back(1);
 	int value = 0;
@@ -93,7 +91,7 @@ vector<int> generateFibonacciSeries(int N)
 		value = fibonacci[i - 1] + fibonacci[i - 2];
 		fibonacci.push_back(value);
 	}
-	return fibonacci;
+
 }
 
 int solution(vector<int> &A) 
@@ -109,7 +107,8 @@ int solution(vector<int> &A)
 	vector<bool> locations(A_size, false);
 
 	//step1 : generate fibonacci series with the maximum jump as N+1;
-	vector<int> fibonacci = generateFibonacciSeries(A_size);
+	vector<int> fibonacci;
+	generateFibonacciSeries(A_size, fibonacci);
 
 	// step2 : initialize the current location and jumps of the frog as -1,0
 	std::list<PathTracker> paths;
@@ -119,8 +118,8 @@ int solution(vector<int> &A)
 	while (!paths.empty())
 	{
 		// get the current path
-		PathTracker currentPath = paths.back();
-		paths.pop_back();
+		const PathTracker currentPath = paths.front();
+		paths.pop_front();
 
 		// check 
 		if (currentPath.location >= 0)
