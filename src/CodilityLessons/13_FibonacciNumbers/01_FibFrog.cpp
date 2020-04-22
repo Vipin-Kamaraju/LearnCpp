@@ -63,6 +63,7 @@ Copyright 2009–2020 by Codility Limited. All Rights Reserved. Unauthorized copyi
 #include <vector>
 #include <algorithm>
 #include <cassert>
+#include <stack>
 
 typedef unsigned long long int l_int;
 
@@ -71,7 +72,7 @@ using namespace std;
 vector<int> generateFibonacciSeries(int N)
 {
 	vector<int> fibonacci;
-
+	
 	fibonacci.push_back(0);
 	fibonacci.push_back(1);
 	int value = 0;
@@ -81,6 +82,9 @@ vector<int> generateFibonacciSeries(int N)
 		value = fibonacci[i - 1] + fibonacci[i - 2];	
 		fibonacci.push_back(value);
 	}
+
+	// we can remove the first 2 elements in the array as they add no value to the series for our problem
+	fibonacci.erase(fibonacci.begin(), fibonacci.begin() + 2);
 	return fibonacci;
 }
 
@@ -135,13 +139,50 @@ vector<int> generatePossibleJumps(vector<int>& A)
 
 	return result;
 }
+
+vector<int> JumpCombinations(vector<int>& fibonacciSeries, int desiredValue) 
+{
+	int remainingValue = desiredValue;
+	vector<stack<int>> Combinations;
+	stack<int> Pairs;
+
+	for (auto it_F = fibonacciSeries.rbegin(); it_F != fibonacciSeries.rend(); ++it_F)
+	{
+		int currentVal = *it_F;
+		for (auto it_F2 = it_F; it_F2 != fibonacciSeries.rend(); )
+		{
+			Pairs.push(*it_F2);
+			remainingValue = remainingValue - *it_F2;
+			if (remainingValue < 0)
+			{
+				remainingValue = remainingValue + *it_F2;
+				Pairs.pop();
+				it_F2++;
+			}
+			else if (remainingValue == 0)
+			{
+				Combinations.push_back(Pairs);
+				while (!Pairs.empty())
+				{
+					Pairs.pop();
+				}
+				it_F2 = fibonacciSeries.rend();
+				remainingValue = desiredValue;
+			}
+		}
+	}
+	vector<int> result; // TODO: Used just for successful compilation. needs to be removed
+	return result;
+}
+
 int solution(vector<int> &A)
 {
 	/*
 	** Logic:
 	** step1 : generate a fibonacci series
-	** step2 : generate possible jumps from array A
-	** atep3 : find the minimum jumps that are required
+	** step2 : generate possible jumps from array A (Probably not necessary in the future)
+	** step3 : find the jumpCombinations from fibonacci series
+	** step4 : find the minimum jumps that are required
 	*/
 	int result = 0;
 	int A_size = A.size();
@@ -152,6 +193,14 @@ int solution(vector<int> &A)
 	// step2
 	vector<int> possibleJumps = generatePossibleJumps(A);
 
+	// possible jump combinations from fibonacci series which add up to (A_size + 1)
+	// There are only very few pairs that can add up to the combination of fibonacci numbers. (Refer : reading material exercise part)
+	// We shall consider all these pairs
+	// this is a very common problem on the internet called the Coin changing problem and a lot of solutions are available
+	// http://jaqm.ro/issues/volume-5,issue-2/pdfs/patterson_harmel.pdf
+	// http://rosettacode.org/wiki/Count_the_coins
+	vector<int> result2 = JumpCombinations(fibonacciSeries, (A_size + 1));
+	// TODO: result 2 only for successful compilation. Needs to be removed and replaced with a meaningful name
 
 	return result;
 }
