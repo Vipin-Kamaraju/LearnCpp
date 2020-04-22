@@ -76,7 +76,7 @@ vector<int> generateFibonacciSeries(int N)
 	fibonacci.push_back(1);
 	int value = 0;
 
-	for (int i = 2;i < N + 1; ++i)
+	for (int i = 2;value <= N + 1; ++i)
 	{
 		value = fibonacci[i - 1] + fibonacci[i - 2];	
 		fibonacci.push_back(value);
