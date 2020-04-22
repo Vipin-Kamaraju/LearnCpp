@@ -109,13 +109,33 @@ int solution(vector<int> &A)
 
 	// step2 : initialize the current location and jumps of the frog as -1,0
 	std::list<PathTracker> paths;
-	PathTracker currentPath(-1,0);
-	paths.push_back(currentPath);
+	paths.push_back(PathTracker(-1, 0));
 
 	// step3 :  Iterate over the array to find the min number of jumps required
 	while (!paths.empty())
 	{
-		// check possible paths here
+		// get the current path
+		PathTracker currentPath = paths.back();
+
+		// iterate over the fibonacci series
+		for (int i = 2; i < fibonacci.size(); ++i)
+		{
+			int currentVal;
+
+			// 3possibilities exist
+			if (currentVal < A_size)
+			{
+
+			}
+			else if (currentVal == A_size)
+			{
+
+			}
+			else if (currentVal > A_size)
+			{
+
+			}
+		}
 	}
 
 	// step4 : If the paths is empty then no possible jump exists => return -1
