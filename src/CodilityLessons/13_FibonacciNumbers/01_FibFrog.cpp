@@ -93,9 +93,6 @@ vector<int> generateFibonacciSeries(int N)
 		value = fibonacci[i - 1] + fibonacci[i - 2];
 		fibonacci.push_back(value);
 	}
-
-	// we can remove the first 2 elements in the array as they add no value to the series for our problem
-	fibonacci.erase(fibonacci.begin(), fibonacci.begin() + 2);
 	return fibonacci;
 }
 
@@ -116,24 +113,29 @@ int solution(vector<int> &A)
 	{
 		// get the current path
 		PathTracker currentPath = paths.back();
+		paths.pop_back();
 
 		// iterate over the fibonacci series
 		for (int i = 2; i < fibonacci.size(); ++i)
 		{
-			int currentVal;
+			// check the actual position and jumps of the frog
+			int currentVal = currentPath.location + fibonacci[i];
 
 			// 3possibilities exist
-			if (currentVal < A_size)
+			// the frog can only jump if this spot is avaialable i.e A[currentVal] = 1
+			if ((currentVal < A_size) && (A[currentVal]))
 			{
-
+				// frog has jumped to a new position
+				paths.push_back(PathTracker(currentVal, currentPath.jump + 1));
 			}
 			else if (currentVal == A_size)
 			{
-
+				minimumJumps = std::min(minimumJumps, currentPath.jump + 1);
+				break;
 			}
 			else if (currentVal > A_size)
 			{
-
+				break;
 			}
 		}
 	}
