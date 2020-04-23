@@ -76,11 +76,11 @@ struct PathTracker
 
 };
 
-void generateFibonacciSeries(int N, vector<int>& fibonacci)
+void generateFibonacciSeries(int N, vector<l_int>& fibonacci)
 {
 	fibonacci.push_back(0);
 	fibonacci.push_back(1);
-	int value = 0;
+	l_int value = 0;
 
 	for (int i = 2; i <= N +1; ++i)
 	{
@@ -105,13 +105,13 @@ vector<int> solution(vector<int> &A, vector<int> &B)
 	sort(copyA.begin(), copyA.end());
 	int maxA = copyA.back();
 
-	vector<int> fibonacci;
+	vector<l_int> fibonacci;
 	generateFibonacciSeries(maxA, fibonacci);
 
 	for (unsigned int i = 0; i < A.size(); ++i)
 	{
-		int combinations = fibonacci[A[i] + 1];
-		int m = pow(2, B[i]);
+		l_int combinations = fibonacci[A[i] + 1];
+		l_int m = pow(2, B[i]);
 		combinations = (combinations % m);
 		result.push_back(combinations);
 	}
@@ -126,9 +126,9 @@ void main()
 	printf("%ld\n", _MSC_VER);    // MSVC version VC++ 14.0
 	printf("%ld\n", _MSVC_LANG);  // shows unidentified due to Intellisense but Macro is defined.
 
-	vector<int> A = { 4,4,5,5,1 };
-	vector<int> B = { 3,2,4,3,1 };
-	vector<int> result_AB = {5,1,8,0,1};
+	vector<int> A = { 4,4,5,5,1,97 };
+	vector<int> B = { 3,2,4,3,1,11 };
+	vector<int> result_AB = {5,1,8,0,1,1729};
 
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(A,B) == result_AB);	
