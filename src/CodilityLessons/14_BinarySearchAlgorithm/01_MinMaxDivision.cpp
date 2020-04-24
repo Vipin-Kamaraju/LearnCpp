@@ -112,11 +112,6 @@ int solution(int K, int M, vector<int> &A)
 				block++;
 				sum = 0;
 			}
-			if (block > K)
-			{
-				break;
-			}
-
 		}
 		if (block < K)
 		{
@@ -126,7 +121,7 @@ int solution(int K, int M, vector<int> &A)
 		if (block >= K)
 		{
 			lowerLimit = result;
-			result = (upperLimit + lowerLimit) / 2;;
+			result = result+1;
 		}
 	}
 	
