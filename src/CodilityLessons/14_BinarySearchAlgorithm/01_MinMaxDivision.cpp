@@ -91,12 +91,9 @@ int solution(int K, int M, vector<int> &A)
 	// if no, then set the lowerLimit to the current median value
 	result = (upperLimit + lowerLimit) / 2;
 
-	while (upperLimit != lowerLimit)
+	while ((upperLimit != lowerLimit) && (upperLimit - lowerLimit != 1))
 	{
-		if (result == lowerLimit)
-		{
-			return result;
-		}
+		
 		int sum = 0;
 		int block = 0;
 		for (unsigned int m = 0; m < A.size(); ++m)
@@ -124,8 +121,44 @@ int solution(int K, int M, vector<int> &A)
 			result = result+1;
 		}
 	}
-	
-	return lowerLimit;
+
+	if (upperLimit == lowerLimit)
+	{
+		return lowerLimit;
+	}
+	else if ((upperLimit - lowerLimit == 1))
+	{
+		result = lowerLimit;
+		int sum = 0;
+		int block = 0;
+		for (unsigned int m = 0; m < A.size(); ++m)
+		{
+			sum = sum + A[m];
+			if (sum > result)
+			{
+				block++;
+				sum = A[m];
+			}
+			else if (sum == result)
+			{
+				block++;
+				sum = 0;
+			}
+		}
+		if (block < K)
+		{
+			return lowerLimit;
+		}
+		else if ((block == K) && (sum == 0))
+		{
+			return lowerLimit;
+		}
+		else if (block >= K)
+		{
+			return upperLimit;
+		}
+	}
+
 }
 
 void main()
@@ -140,8 +173,20 @@ void main()
 	int M = 5;
 	int result_A = 6;
 
+	int K2 = 1;
+	int M2 = 10;
+	vector<int> B = { 5,3 };
+	int result_B = 8;
+
+	int K3 = 3;
+	int M3 = 3;
+	vector<int> C = { 1,3,1,3,2,1,3 };
+	int result_C = 5;
+
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(K,M,A) == result_A);	
+	assert(solution(K2, M2, B) == result_B);
+	assert(solution(K3, M3, C) == result_C);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
