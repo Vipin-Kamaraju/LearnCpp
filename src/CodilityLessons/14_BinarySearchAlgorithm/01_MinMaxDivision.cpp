@@ -79,11 +79,18 @@ int solution(int K, int M, vector<int> &A)
 	int result = 0;
 	int upperLimit = 0; // sum(A)
 	int lowerLimit = 0; // max(A)
+	vector<int> B;
 
 	for (const auto &a : A)
 	{
 		lowerLimit = std::max(a, lowerLimit);
 		upperLimit = upperLimit + a;
+
+		//removing zero elements as they do not add any value
+		if (a != 0)
+		{
+			B.push_back(a);
+		}
 	}
 
 	// check if the loop works for a median value of upperLimit and LowerLimit
@@ -96,18 +103,24 @@ int solution(int K, int M, vector<int> &A)
 		
 		int sum = 0;
 		int block = 0;
-		for (unsigned int m = 0; m < A.size(); ++m)
+		for (unsigned int m = 0; m < B.size(); ++m)
 		{
-			sum = sum + A[m];
+			sum = sum + B[m];
 			if (sum > result)
 			{
 				block++;
-				sum = A[m];
+				sum = B[m];
 			}
 			else if (sum == result)
 			{
 				block++;
 				sum = 0;
+			}
+			if (block >= K)
+			{
+				lowerLimit = result;
+				result = result + 1;
+				break;
 			}
 		}
 		if (block < K)
@@ -115,11 +128,7 @@ int solution(int K, int M, vector<int> &A)
 			upperLimit = result;
 			result = (upperLimit + lowerLimit) / 2;
 		}
-		if (block >= K)
-		{
-			lowerLimit = result;
-			result = result+1;
-		}
+		
 	}
 
 	if (upperLimit == lowerLimit)
@@ -131,13 +140,13 @@ int solution(int K, int M, vector<int> &A)
 		result = lowerLimit;
 		int sum = 0;
 		int block = 0;
-		for (unsigned int m = 0; m < A.size(); ++m)
+		for (unsigned int m = 0; m < B.size(); ++m)
 		{
-			sum = sum + A[m];
+			sum = sum + B[m];
 			if (sum > result)
 			{
 				block++;
-				sum = A[m];
+				sum = B[m];
 			}
 			else if (sum == result)
 			{
@@ -183,10 +192,16 @@ void main()
 	vector<int> C = { 1,3,1,3,2,1,3 };
 	int result_C = 5;
 
+	int K4 = 3;
+	int M4 = 10;
+	vector<int> D = { 0,0,0,1,1,1,1,0,1,1,1,1, };
+	int result_D = 3;
+
 	// first lets return the leader and check if we are getting the correct answer
 	assert(solution(K,M,A) == result_A);	
 	assert(solution(K2, M2, B) == result_B);
 	assert(solution(K3, M3, C) == result_C);
+	assert(solution(K4, M4, D) == result_D);
 
 	cout << "All tests passed" << endl;
 	system("PAUSE");
