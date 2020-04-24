@@ -76,14 +76,14 @@ int solution(int K, int M, vector<int> &A)
 	**
 	*/
 
-	int result = 0;
-	int upperLimit = 0; // sum(A)
-	int lowerLimit = 0; // max(A)
+	l_int result = 0;
+	l_int upperLimit = 0; // sum(A)
+	l_int lowerLimit = 0; // max(A)
 	vector<int> B;
 
 	for (const auto &a : A)
 	{
-		lowerLimit = std::max(a, lowerLimit);
+		lowerLimit = std::max(a, int(lowerLimit));
 		upperLimit = upperLimit + a;
 
 		//removing zero elements as they do not add any value
@@ -101,7 +101,7 @@ int solution(int K, int M, vector<int> &A)
 	while ((upperLimit != lowerLimit) && (upperLimit - lowerLimit != 1))
 	{
 		
-		int sum = 0;
+		l_int sum = 0;
 		int block = 0;
 		for (unsigned int m = 0; m < B.size(); ++m)
 		{
@@ -119,9 +119,10 @@ int solution(int K, int M, vector<int> &A)
 			if (block >= K)
 			{
 				lowerLimit = result;
-				result = result + 1;
+				result = (upperLimit + lowerLimit) / 2;
 				break;
 			}
+
 		}
 		if (block < K)
 		{
@@ -138,7 +139,7 @@ int solution(int K, int M, vector<int> &A)
 	else if ((upperLimit - lowerLimit == 1))
 	{
 		result = lowerLimit;
-		int sum = 0;
+		l_int sum = 0;
 		int block = 0;
 		for (unsigned int m = 0; m < B.size(); ++m)
 		{
