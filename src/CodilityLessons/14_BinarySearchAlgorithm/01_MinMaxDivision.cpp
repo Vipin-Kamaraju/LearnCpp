@@ -68,8 +68,69 @@ using namespace std;
 
 int solution(int K, int M, vector<int> &A)
 {
+	/*
+	** Logic: Use binary search concept to reduce the search for the min of Large sum possible
+	** step1 : the min Large sum that can be achieved is the max(A)
+	** step2 : the max Large sum it can achieve is sum(A)
+	** step3 :  Using the binary search algorithm find the median value within this range that can satisfy all the conditions
+	**
+	*/
+
 	int result = 0;
-	return result;
+	int upperLimit = 0; // sum(A)
+	int lowerLimit = 0; // max(A)
+
+	for (const auto &a : A)
+	{
+		lowerLimit = std::max(a, lowerLimit);
+		upperLimit = upperLimit + a;
+	}
+
+	// check if the loop works for a median value of upperLimit and LowerLimit
+	// if yes, then set the upperLimit to the current median value
+	// if no, then set the lowerLimit to the current median value
+	result = (upperLimit + lowerLimit) / 2;
+
+	while (upperLimit != lowerLimit)
+	{
+		if (result == lowerLimit)
+		{
+			return result;
+		}
+		int sum = 0;
+		int block = 0;
+		for (unsigned int m = 0; m < A.size(); ++m)
+		{
+			sum = sum + A[m];
+			if (sum > result)
+			{
+				block++;
+				sum = A[m];
+			}
+			else if (sum == result)
+			{
+				block++;
+				sum = 0;
+			}
+			if (block > K)
+			{
+				break;
+			}
+
+		}
+		if (block < K)
+		{
+			upperLimit = result;
+			result = (upperLimit + lowerLimit) / 2;
+		}
+		if (block >= K)
+		{
+			lowerLimit = result;
+			result = (upperLimit + lowerLimit) / 2;;
+		}
+	}
+	
+	return lowerLimit;
 }
 
 void main()
