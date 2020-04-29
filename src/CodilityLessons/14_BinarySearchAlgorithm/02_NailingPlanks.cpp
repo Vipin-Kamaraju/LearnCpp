@@ -84,35 +84,71 @@ int solution(vector<int> &A, vector<int> &B, vector<int> &C)
 
 	vector<int> currentPlanksNailed(N, 0);
 
+	vector<std::pair<int, int>> AB;
+
+	for (unsigned int i = 0; i < A.size(); ++i)
+	{
+		AB.push_back(std::pair<int,int>(A[i], B[i]));
+	}
+
+	sort(AB.begin(), AB.end());
+
+
 	// lowerLimit and upperLimit of number of nails
 	/*int lowerLimit = 1;
 	int upperLimit = M;*/
 	int count = 0;
 	int m = 0;
+	int loopCounter = 0;
 
 	// Iterate over C
+	// solution 1
+	//for (; m < M; ++m)
+	//{
+	//	if (count == N)
+	//	{
+	//		cout << "loopCounter = " << loopCounter << endl;
+	//		return m;
+	//	}
+	//	// Iterate over A & B
+	//	for (int n = 0; n < N;++n)
+	//	{
+	//		loopCounter++;
+	//		if ((A[n] <= C[m]) && (C[m] <= B[n]) && (currentPlanksNailed.at(n) == 0))
+	//		{
+	//			currentPlanksNailed.at(n) = 1;
+	//			count++;
+	//		}
+	//		
+	//	}	
+	//}
+
+	// solution 2
 	for (; m < M; ++m)
 	{
 		if (count == N)
 		{
+			cout << "loopCounter = " << loopCounter << endl;
 			return m;
 		}
-
+		// Iterate over A & B
 		for (int n = 0; n < N;++n)
 		{
-			if ((A[n] <= C[m]) && (C[m] <= B[n]) && (currentPlanksNailed.at(n) == 0))
+			loopCounter++;
+			if ((AB[n].first <= C[m]) && (C[m] <= AB[n].second) && (currentPlanksNailed.at(n) == 0))
 			{
 				currentPlanksNailed.at(n) = 1;
 				count++;
 			}
-
-			/*if (C[m] < A[n])
+			if (AB[n].first > C[m])
 			{
 				break;
-			}*/
-		}	
+			}
+
+		}
 	}
 
+	cout << "loopCounter = " << loopCounter << endl;
 	if (count != N)
 	{
 		return -1;
