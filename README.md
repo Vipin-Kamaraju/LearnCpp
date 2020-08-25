@@ -12,7 +12,7 @@
 - Perform static code analysis for all tasks
 - Use exception Handling for error messages
 - Verify if there are any memory leaks using Visual leak detector
-- Create branches from issues automatically
+- Create branches from issues automatically : completed
 
 ### Checklist for Advanced Tasks / TODO
 - Use a Git work-flow
